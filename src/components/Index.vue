@@ -1,16 +1,16 @@
 <template>
-    <el-container class="main-container">
-        <el-header>
-            <Header></Header>
-        </el-header>
-        <el-container>
-            <el-aside>Aside</el-aside>
-            <el-container>
-                <el-main>Main</el-main>
-                <el-footer>Footer</el-footer>
-            </el-container>
-        </el-container>
-    </el-container>
+    <div>
+        <el-row type="flex" justify="center" align="middle">
+            <el-col :span="24"><div style="text-align: center;font-size: 20px;font-weight: bolder" class="grid-content bg-purple">婷的个人网站</div></el-col>
+        </el-row>
+        <el-row>
+            <el-col justify="center" :span="24"><Header></Header></el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="18"><div style="height: 800px" class="grid-content bg-purple-light">main</div></el-col>
+            <el-col :span="6"><div style="height: 800px" class="grid-content bg-purple">left</div></el-col>
+        </el-row>
+    </div>
 
 </template>
 
@@ -37,29 +37,21 @@
 </script>
 
 <style scoped>
-    .main-container {
-        width: 100%;
-        height: 100%;
+    .bg-purple-dark {
+        background: #99a9bf;
     }
-
-    .el-header, .el-footer {
-        background-color: #B3C0D1;
-        color: #333;
-        text-align: center;
-        line-height: 60px;
+    .bg-purple {
+        background: #d3dce6;
     }
-
-    .el-aside {
-        background-color: #D3DCE6;
-        color: #333;
-        text-align: center;
-        line-height: 200px;
+    .bg-purple-light {
+        background: #e5e9f2;
     }
-
-    .el-main {
-        background-color: #E9EEF3;
-        color: #333;
-        text-align: center;
-        line-height: 160px;
+    .grid-content {
+        border-radius: 4px;
+        min-height: 36px;
+    }
+    .row-bg {
+        padding: 10px 0;
+        background-color: #f9fafc;
     }
 </style>
