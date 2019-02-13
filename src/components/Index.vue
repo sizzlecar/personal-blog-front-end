@@ -7,7 +7,7 @@
             <el-col justify="center" :span="24"><Header></Header></el-col>
         </el-row>
         <el-row>
-            <el-col :span="18"><div style="height: 800px" class="grid-content bg-purple-light">main</div></el-col>
+            <el-col :span="18"><Article v-for="(article,index)  in articles" :key=index :title="article.title" :content="article.content"  class="grid-content bg-purple-light"></Article></el-col>
             <el-col :span="6"><div style="height: 800px" class="grid-content bg-purple">left</div></el-col>
         </el-row>
     </div>
@@ -17,12 +17,28 @@
 <script>
     //import 组件时就算是同级目录也要加上./ 否则会找不到这个组件
     import Header from './Header.vue'
+    import Article from './list/Article.vue'
     export default {
         name: 'Index',
         data() {
             return {
                 activeIndex: '1',
-                activeIndex2: '1'
+                activeIndex2: '1',
+                articles:[
+                    {
+                        "title":"1",
+                        "content":"xxx"
+                    },
+                    {
+                        "title":"2",
+                        "content":"xxx2"
+                    },
+                    {
+                        "title":"3",
+                        "content":"xxx3"
+                    }
+
+                ]
             };
         },
         methods: {
@@ -31,7 +47,8 @@
             }
         },
         components:{
-            Header
+            Header,
+            Article
         }
     }
 </script>
@@ -53,5 +70,9 @@
     .row-bg {
         padding: 10px 0;
         background-color: #f9fafc;
+    }
+    .suspension {
+        position: fixed;
+        z-index: 9;
     }
 </style>
