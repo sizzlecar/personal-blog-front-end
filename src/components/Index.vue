@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-row type="flex" justify="center" align="middle">
-            <el-col :span="24"><div style="text-align: center;font-size: 20px;font-weight: bolder" class="grid-content bg-purple">婷的个人网站</div></el-col>
+            <el-col :span="24"><div style="text-align: center;font-size: 20px;font-weight: bolder" class="grid-content bg-purple">今晚打老虎</div></el-col>
         </el-row>
         <el-row>
             <el-col justify="center" :span="24"><Header></Header></el-col>

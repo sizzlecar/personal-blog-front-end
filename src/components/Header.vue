@@ -1,32 +1,36 @@
 <template>
-    <el-menu style="position: relative;left: 30%;width: 40%" :default-active="activeIndex" mode="horizontal"
+    <el-menu style="position: relative;left: 30%;width: 40%"
+             :default-active="activeIndex"
+             mode="horizontal"
+             :router="true"
              @select="handleSelect">
-        <el-menu-item index="1" @click="goIndexPage">首页</el-menu-item>
-        <el-submenu index="2">
-            <template slot="title">Java</template>
-            <el-menu-item index="2-1">基础语法</el-menu-item>
-            <el-menu-item index="2-2">高级特性</el-menu-item>
-            <el-submenu index="2-4">
-                <template slot="title">框架</template>
-                <el-menu-item index="2-4-1">spring</el-menu-item>
-                <el-menu-item index="2-4-2">mybatis</el-menu-item>
-                <el-menu-item index="2-4-3">springBoot</el-menu-item>
-            </el-submenu>
+        <el-menu-item v-for="item in getMenuItems(this.menu, 0)" :index="item.path" :key="item.id" :disabled="!item.active">{{item.name}}</el-menu-item>
+        <el-submenu v-for="item in getSubMenuItems(this.menu, 0)" :index="item.path" :key="item.id" :disabled="!item.active">
+            <template slot="title">{{item.name}}</template>
+            <el-menu-item v-for="subItem in getMenuItems(item.child, item.level + 1)" :index="subItem.path" :key="subItem.id" :disabled="!subItem.active">{{subItem.name}}</el-menu-item>
+            <!--<el-submenu v-for="subItem in getSubMenuItems(item.child, item.level + 1)" :index="subItem.path" :key="subItem.id" :disabled="!subItem.active">
+                <template slot="title">{{subItem.name}}</template>
+                <el-menu-item v-for="subSubItem in getMenuItems(subItem.child, subItem.level + 1)" :index="subSubItem.path" :key="subSubItem.id" :disabled="!subSubItem.active">{{subSubItem.name}}</el-menu-item>
+            </el-submenu>-->
         </el-submenu>
-        <el-menu-item index="3" disabled>docker</el-menu-item>
     </el-menu>
 </template>
 
 <script>
+    import {getMenu} from '../common/request'
     export default {
         name: "Header",
         data() {
             return {
                 activeIndex: '1',
+                menu:[]
             };
 
         },
 
+        computed:{
+
+        },
         methods: {
 
             handleSelect: function () {
@@ -34,9 +38,37 @@
             },
             goIndexPage: function () {
                 this.$router.push("/index/list");
+            },
+            getMenuItems: function (menuArray, level) {
+                const menuItems = [];
+                menuArray.forEach(item =>{
+                    if(item.child.length === 0 && item.level === level){
+                        //没有子类的的第一级菜单
+                        menuItems.push(item);
+                    }
+                });
+                return menuItems;
+            },
+            getSubMenuItems: function (menuArray, level) {
+                const subMenuItems = [];
+                menuArray.forEach(item =>{
+                    if(item.child.length !== 0 && item.level === level){
+                        //有子菜单的第一级菜单
+                        subMenuItems.push(item);
+                    }
+                });
+                return subMenuItems;
             }
 
 
+        },
+        created: function () {
+            window.console.log('I am running');
+            getMenu().then(res => {
+                //获取菜单数据
+                window.console.log(res.data);
+                this.menu = res.data;
+            });
         }
 
     }
