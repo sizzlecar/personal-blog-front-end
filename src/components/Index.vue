@@ -7,7 +7,15 @@
             <el-col justify="center" :span="24"><Header></Header></el-col>
         </el-row>
         <el-row>
-            <el-col :span="18"><Article v-for="(article,index)  in articles" :key=index :title="article.title" :content="article.content"  class="grid-content bg-purple-light"></Article></el-col>
+            <el-col :span="18">
+                <Article v-for="(article,index)  in articles"
+                         :key=index
+                         :title="article.title"
+                         :content="article.content"
+                         class="grid-content bg-purple-light">
+
+                </Article>
+            </el-col>
             <el-col :span="6"><div style="height: 800px" class="grid-content bg-purple">left</div></el-col>
         </el-row>
     </div>
