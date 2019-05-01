@@ -53,8 +53,9 @@
         },
         methods: {
 
-            handleSelect: function () {
-
+            handleSelect: function (index, indexPath) {
+                this.$router.push(index);
+                window.console.log(this.$router)
             },
             goIndexPage: function () {
                 this.$router.push("/index/list");

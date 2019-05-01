@@ -8,13 +8,12 @@
         </el-row>
         <el-row>
             <el-col :span="18">
-                <Article v-for="(article,index)  in articles"
-                         :key=index
-                         :title="article.title"
-                         :content="article.content"
-                         class="grid-content bg-purple-light">
-
-                </Article>
+                <p class="font-style">
+                    欢迎来到关致之的个人网站,请关注我的公共号了解更多。
+                </p>
+                <div align="center">
+                    <img src="../assets/weixin.jpg" />
+                </div>
             </el-col>
             <el-col :span="6"><div style="height: 800px" class="grid-content bg-purple">left</div></el-col>
         </el-row>
@@ -25,28 +24,12 @@
 <script>
     //import 组件时就算是同级目录也要加上./ 否则会找不到这个组件
     import Header from './Header.vue'
-    import Article from './list/Article.vue'
     export default {
         name: 'Index',
         data() {
             return {
                 activeIndex: '1',
-                activeIndex2: '1',
-                articles:[
-                    {
-                        "title":"1",
-                        "content":"xxx"
-                    },
-                    {
-                        "title":"2",
-                        "content":"xxx2"
-                    },
-                    {
-                        "title":"3",
-                        "content":"xxx3"
-                    }
-
-                ]
+                activeIndex2: '1'
             };
         },
         methods: {
@@ -55,8 +38,7 @@
             }
         },
         components:{
-            Header,
-            Article
+            Header
         }
     }
 </script>
@@ -82,5 +64,12 @@
     .suspension {
         position: fixed;
         z-index: 9;
+    }
+    .font-style{
+        font-size: larger;
+        font-weight: bolder;
+        color: red;
+        align-content: center;
+        text-align: center;
     }
 </style>
