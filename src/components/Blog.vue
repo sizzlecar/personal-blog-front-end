@@ -1,21 +1,18 @@
 <template>
     <div>
         <el-row type="flex" justify="center" align="middle">
-            <el-col :span="24"><div style="text-align: center;font-size: 20px;font-weight: bolder" class="grid-content bg-purple">今晚打老虎</div></el-col>
+            <el-col :span="24">
+                <BaseTop></BaseTop>
+            </el-col>
         </el-row>
         <el-row>
-            <el-col justify="center" :span="24"><Header></Header></el-col>
+            <el-col justify="center" :span="24"><BaseHeader></BaseHeader></el-col>
         </el-row>
         <el-row>
             <el-col :span="18">
-                <p class="font-style">
-                    欢迎来到关致之的个人网站,请关注我的公共号了解更多。
-                </p>
-                <div align="center">
-                    <img src="../assets/weixin.jpg" />
-                </div>
+                <router-view></router-view>
             </el-col>
-            <el-col :span="6"><div style="height: 800px" class="grid-content bg-purple">left</div></el-col>
+            <el-col :span="6"><BaseLeft></BaseLeft></el-col>
         </el-row>
     </div>
 
@@ -23,13 +20,14 @@
 
 <script>
     //import 组件时就算是同级目录也要加上./ 否则会找不到这个组件
-    import Header from './Header.vue'
+    import BaseHeader from './base/BaseHeader.vue';
+    import BaseTop from './base/BaseTop.vue';
+    import BaseLeft from "./base/BaseLeft";
     export default {
-        name: 'Index',
+        name: 'Blog',
         data() {
             return {
-                activeIndex: '1',
-                activeIndex2: '1'
+
             };
         },
         methods: {
@@ -38,7 +36,9 @@
             }
         },
         components:{
-            Header
+            BaseLeft,
+            BaseHeader,
+            BaseTop
         }
     }
 </script>
@@ -65,11 +65,5 @@
         position: fixed;
         z-index: 9;
     }
-    .font-style{
-        font-size: larger;
-        font-weight: bolder;
-        color: red;
-        align-content: center;
-        text-align: center;
-    }
+
 </style>

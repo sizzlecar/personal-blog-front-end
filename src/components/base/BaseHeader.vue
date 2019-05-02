@@ -37,7 +37,7 @@
 </template>
 
 <script>
-    import {getMenu} from '../common/request'
+    import {getMenu} from '../../common/request'
     export default {
         name: "Header",
         data() {
@@ -54,11 +54,8 @@
         methods: {
 
             handleSelect: function (index, indexPath) {
-                this.$router.push(index);
+                this.$router.push(indexPath);
                 window.console.log(this.$router)
-            },
-            goIndexPage: function () {
-                this.$router.push("/index/list");
             },
             getMenuItems: function (menuArray, level) {
                 const menuItems = [];
@@ -84,10 +81,8 @@
 
         },
         created: function () {
-            window.console.log('I am running');
             getMenu().then(res => {
                 //获取菜单数据
-                window.console.log(res.data);
                 this.menu = res.data;
             });
         }

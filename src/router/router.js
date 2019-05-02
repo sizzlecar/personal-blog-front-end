@@ -1,24 +1,34 @@
-import Router from 'vue-router'
-import Vue from 'vue'
-import Index from '@/components/Index'
-import Header from '@/components/Header'
-import Article from '@/components/list/Article'
-Vue.use(Router);
-export default new Router({
+import Blog from '@/components/Blog';
+import ArticleList from '@/components/ArticleList';
+import ArticleDetail from '@/components/ArticleDetail';
+import PersonalProfile from '@/components/PersonalProfile';
 
-    routers :[
-        {
-            path: '/index',
-            name: 'Article',
-            comment: Article
-        },{
-            path: '/java/frame/spring',
-            name: 'Article',
-            comment: Article
-        }
+const routers = [
+    {
+        path: '/blog',
+        name: 'Blog',
+        component: Blog,
+        children: [
+            {
+                path: '/blog/article-list',
+                name: 'ArticleList',
+                component: ArticleList,
+            },{
+                path: '/blog/article-detail',
+                name: 'ArticleDetail',
+                component: ArticleDetail,
+            },{
+                path: '/blog/personal-profile',
+                name: 'PersonalProfile',
+                component: PersonalProfile
+            }
+
+        ],
+        redirect: '/blog/personal-profile'
+    }
 
 
+];
 
-    ]
+export default routers;
 
-})
