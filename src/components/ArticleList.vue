@@ -2,7 +2,7 @@
     <div>
         <div v-for="(article, index) in articles" :key="index">
             <el-row>
-                <el-col :span="24">
+                <el-col :span="24" @click="getBlogDetail(article.id)">
                     <div style="font-weight: bolder;font-size: larger" class="grid-content bg-purple">{{article.blogTitle}}</div>
                 </el-col>
             </el-row>
@@ -21,6 +21,8 @@
     export default {
         name: "ArticleList",
         props: {
+            //组件内部不能修改 props
+            // 父组件修改 props  -> 子组件更新
             menuId: {
                 type: String,
                 default: '0'
@@ -40,6 +42,10 @@
                     this.articles = result.data;
                 });
 
+            },
+            //获取文章详情
+            getBlogDetail: function (blogId) {
+                this.$router.push({path: '/blog/article-detail' + `${this.menuId}` + `${blogId}`});
             }
 
 

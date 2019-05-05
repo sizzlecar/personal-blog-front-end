@@ -19,4 +19,14 @@ function getBlogList(menuId){
     return axios.get("/get-blog-list/" + menuId);
 }
 
-export{getMenu,getBlogList}
+
+/**
+ * 获取博客详情
+ * @returns {AxiosPromise<any>}
+ */
+function getBlogDetail(menuId, blogId){
+    return axios.get("/get-blog-detail/" + menuId + "/" + blogId);
+}
+
+
+export{getMenu, getBlogList, getBlogDetail}

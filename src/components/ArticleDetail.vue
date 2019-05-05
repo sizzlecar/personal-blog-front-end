@@ -30,7 +30,7 @@
 </template>
 
 <script>
-
+    import {getBlogDetail} from '../common/request';
     export default {
         name: "ArticleDetail",
         props: {
@@ -46,28 +46,38 @@
         components: {},
         data() {
             return {
-                content: '文章内容',
-                title: '文章标题',
-                comments:['第一条评论','第二条评论','第三条评论', '第四条评论']//评论
-        };
+                content: '',
+                title: '',
+                comments:[]//评论
+            };
+        },
+        methods: {
+
+
+            /**
+             * 获取博客详情
+             * @param menuId
+             * @param blogId
+             */
+            getBlogDetail: function (menuId, blogId) {
+
+
+            }
 
         },
         created:function () {
             window.console.log('ArticleDetail created component I am running');
-            window.console.log(this.menuId);
-            window.console.log(this.blogId);
         },
         mounted: function(){
-            window.console.log('ArticleDetail mounted component I am running')
-            window.console.log(this.menuId);
-            window.console.log(this.blogId);
+            window.console.log('ArticleDetail mounted component I am running');
         },
         beforeRouteUpdate (to, from, next) {
             // 在当前路由改变，但是该组件被复用时调用
             // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
             // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
             // 可以访问组件实例 `this`
-            window.console.log('ArticleDetail beforeRouteUpdate component I am running')
+            window.console.log('ArticleDetail beforeRouteUpdate component I am running');
+            next();
         },
     }
 </script>
