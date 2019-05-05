@@ -10,4 +10,13 @@ function getMenu(){
     return axios.get("/menu");
 }
 
-export{getMenu}
+
+/**
+ * 获取某一菜单下的博客
+ * @returns {AxiosPromise<any>}
+ */
+function getBlogList(menuId){
+    return axios.get("/get-blog-list/" + menuId);
+}
+
+export{getMenu,getBlogList}

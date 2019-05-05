@@ -33,6 +33,16 @@
 
     export default {
         name: "ArticleDetail",
+        props: {
+            menuId: {
+                type: String,
+                default: '0'
+            },
+            blogId: {
+                type: String,
+                default: '0'
+            }
+        },
         components: {},
         data() {
             return {
@@ -43,10 +53,14 @@
 
         },
         created:function () {
-            window.console.log('ArticleDetail created component I am running')
+            window.console.log('ArticleDetail created component I am running');
+            window.console.log(this.menuId);
+            window.console.log(this.blogId);
         },
         mounted: function(){
             window.console.log('ArticleDetail mounted component I am running')
+            window.console.log(this.menuId);
+            window.console.log(this.blogId);
         },
         beforeRouteUpdate (to, from, next) {
             // 在当前路由改变，但是该组件被复用时调用
