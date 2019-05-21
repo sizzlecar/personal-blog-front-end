@@ -54,7 +54,7 @@
         },
         methods: {
 
-            handleSelect: function (index, indexPath) {
+            handleSelect: function (index) {
                 //window.console.log(index);
                 this.$router.push({path: this.rootPath + `${index}`});
             },
