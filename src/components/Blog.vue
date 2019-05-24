@@ -12,7 +12,7 @@
             <el-col :span="18">
                 <router-view></router-view>
             </el-col>
-            <el-col :span="6"><BaseLeft></BaseLeft></el-col>
+            <el-col :span="6"><BaseRight></BaseRight></el-col>
         </el-row>
     </div>
 
@@ -22,7 +22,7 @@
     //import 组件时就算是同级目录也要加上./ 否则会找不到这个组件
     import BaseHeader from './base/BaseHeader.vue';
     import BaseTop from './base/BaseTop.vue';
-    import BaseLeft from "./base/BaseLeft";
+    import BaseRight from "./base/BaseRight";
     export default {
         name: 'Blog',
         data() {
@@ -31,11 +31,10 @@
             };
         },
         methods: {
-            handleSelect(key, keyPath) {
-            }
+
         },
         components:{
-            BaseLeft,
+            BaseRight,
             BaseHeader,
             BaseTop
         }

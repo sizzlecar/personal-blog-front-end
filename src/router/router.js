@@ -1,7 +1,7 @@
-import Blog from '@/components/Blog';
-import ArticleList from '@/components/ArticleList';
-import ArticleDetail from '@/components/ArticleDetail';
-import PersonalProfile from '@/components/PersonalProfile';
+import Blog from '../components/Blog';
+import ArticleList from '../components/ArticleList';
+import ArticleDetail from '../components/ArticleDetail';
+import PersonalProfile from '../components/PersonalProfile';
 
 const routers = [
 
