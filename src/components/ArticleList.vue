@@ -1,8 +1,10 @@
 <template>
     <div>
-        <div v-for="(article, index) in articles" :key="index">
+        <div v-for="(article, index) in articles"
+             :key="index"
+             @click="jumpBlogDetail(article.id)" >
             <el-row>
-                <el-col :span="24" @click="getBlogDetail(article.id)">
+                <el-col :span="24">
                     <div style="font-weight: bolder;font-size: larger" class="grid-content bg-purple">{{article.blogTitle}}</div>
                 </el-col>
             </el-row>
@@ -11,7 +13,6 @@
                     <div class="grid-content bg-purple">{{article.blogContent}}</div>
                 </el-col>
             </el-row>
-
         </div>
     </div>
 </template>
@@ -36,16 +37,15 @@
         methods: {
             // 获取blog list
             getBlogList: function (menuId) {
-                window.console.log('getBlogList is running');
                 getBlogList(menuId).then(result => {
-                    window.console.log(result.data);
                     this.articles = result.data;
                 });
 
             },
             //获取文章详情
-            getBlogDetail: function (blogId) {
-                this.$router.push({path: '/blog/article-detail' + `${this.menuId}` + `${blogId}`});
+            jumpBlogDetail: function (blogId) {
+                window.console.log("jumpBlogDetail is running...");
+                this.$router.push({path: '/blog/article-detail/' + `${this.menuId}`+ "/" + `${blogId}`});
             }
 
 
@@ -54,7 +54,6 @@
             this.getBlogList(this.menuId);
         },
         mounted: function(){
-            window.console.log(this.menuId);
         },
         beforeRouteUpdate (to, from, next) {
             // 在当前路由改变，但是该组件被复用时调用

@@ -32,7 +32,6 @@
         },
         methods: {
             handleSelect(key, keyPath) {
-                window.console.log(key, keyPath);
             }
         },
         components:{
