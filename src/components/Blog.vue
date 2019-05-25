@@ -1,18 +1,24 @@
 <template>
     <div>
-        <el-row type="flex" justify="center" align="middle">
+        <el-row class="site-branding">
             <el-col :span="24">
                 <BaseTop></BaseTop>
             </el-col>
         </el-row>
-        <el-row>
-            <el-col justify="center" :span="24"><BaseHeader></BaseHeader></el-col>
-        </el-row>
-        <el-row>
-            <el-col :span="18">
-                <router-view></router-view>
+        <el-row class="navigation-top">
+            <el-col justify="center" :span="24">
+                <BaseHeader></BaseHeader>
             </el-col>
-            <el-col :span="6"><BaseRight></BaseRight></el-col>
+        </el-row>
+        <el-row class="site-content">
+            <div class="wrap">
+                <el-col :span="18">
+                    <router-view></router-view>
+                </el-col>
+                <el-col :span="6">
+                    <BaseRight></BaseRight>
+                </el-col>
+            </div>
         </el-row>
     </div>
 
@@ -23,17 +29,14 @@
     import BaseHeader from './base/BaseHeader.vue';
     import BaseTop from './base/BaseTop.vue';
     import BaseRight from "./base/BaseRight";
+
     export default {
         name: 'Blog',
         data() {
-            return {
-
-            };
+            return {};
         },
-        methods: {
-
-        },
-        components:{
+        methods: {},
+        components: {
             BaseRight,
             BaseHeader,
             BaseTop
@@ -42,26 +45,27 @@
 </script>
 
 <style scoped>
-    .bg-purple-dark {
-        background: #99a9bf;
+    .wrap {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 900px;
+        padding-left: 2em;
+        padding-right: 2em;
     }
-    .bg-purple {
-        background: #d3dce6;
+
+    .navigation-top {
+        background: #fff;
+        border-bottom: 1px solid #eee;
+        border-top: 1px solid #eee;
+        position: relative;
     }
-    .bg-purple-light {
-        background: #e5e9f2;
+
+    .site-branding {
+        background-color: #fafafa;
     }
-    .grid-content {
-        border-radius: 4px;
-        min-height: 36px;
-    }
-    .row-bg {
-        padding: 10px 0;
-        background-color: #f9fafc;
-    }
-    .suspension {
-        position: fixed;
-        z-index: 9;
+
+    .site-content {
+        padding: 5.5em 0 0;
     }
 
 </style>

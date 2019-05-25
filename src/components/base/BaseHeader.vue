@@ -1,39 +1,40 @@
 <template>
-    <el-menu style="position: relative;left: 30%;width: 40%"
-             :default-active="activeIndex"
-             mode="horizontal"
-             :router="false"
-             @select="handleSelect">
-        <el-menu-item v-for="item in getMenuItems(this.menu, 0)"
-                      :index="item.id.toString()"
-                      :key="item.id"
-                      :disabled="!item.active">{{item.name}}
-        </el-menu-item>
-        <el-submenu v-for="item in getSubMenuItems(this.menu, 0)"
-                    :index="item.id.toString()"
-                    :key="item.id"
-                    :disabled="!item.active">
-            <template slot="title">{{item.name}}</template>
-            <el-menu-item v-for="subItem in getMenuItems(item.child, item.level + 1)"
-                          :index="subItem.id.toString()"
-                          :key="subItem.id"
-                          :disabled="!subItem.active">
-                {{subItem.name}}
+    <div class="wrap">
+        <el-menu :default-active="activeIndex"
+                 mode="horizontal"
+                 :router="false"
+                 @select="handleSelect">
+            <el-menu-item v-for="item in getMenuItems(this.menu, 0)"
+                          :index="item.id.toString()"
+                          :key="item.id"
+                          :disabled="!item.active">{{item.name}}
             </el-menu-item>
-            <el-submenu v-for="subItem in getSubMenuItems(item.child, item.level + 1)"
-                        :index="subItem.id.toString()"
-                        :key="subItem.id"
-                        :disabled="!subItem.active">
-                <template slot="title">{{subItem.name}}</template>
-                <el-menu-item v-for="subSubItem in getMenuItems(subItem.child, subItem.level + 1)"
-                              :index="subSubItem.id.toString()"
-                              :key="subSubItem.id"
-                              :disabled="!subSubItem.active">
-                    {{subSubItem.name}}
+            <el-submenu v-for="item in getSubMenuItems(this.menu, 0)"
+                        :index="item.id.toString()"
+                        :key="item.id"
+                        :disabled="!item.active">
+                <template slot="title">{{item.name}}</template>
+                <el-menu-item v-for="subItem in getMenuItems(item.child, item.level + 1)"
+                              :index="subItem.id.toString()"
+                              :key="subItem.id"
+                              :disabled="!subItem.active">
+                    {{subItem.name}}
                 </el-menu-item>
+                <el-submenu v-for="subItem in getSubMenuItems(item.child, item.level + 1)"
+                            :index="subItem.id.toString()"
+                            :key="subItem.id"
+                            :disabled="!subItem.active">
+                    <template slot="title">{{subItem.name}}</template>
+                    <el-menu-item v-for="subSubItem in getMenuItems(subItem.child, subItem.level + 1)"
+                                  :index="subSubItem.id.toString()"
+                                  :key="subSubItem.id"
+                                  :disabled="!subSubItem.active">
+                        {{subSubItem.name}}
+                    </el-menu-item>
+                </el-submenu>
             </el-submenu>
-        </el-submenu>
-    </el-menu>
+        </el-menu>
+    </div>
 </template>
 
 <script>

@@ -3,15 +3,15 @@
         <!--标题-->
         <el-row>
             <el-col :span="24">
-                <div class="grid-content bg-purple-dark">
+                <h1 class="">
                     {{title}}
-                </div>
+                </h1>
             </el-col>
         </el-row>
         <!--内容-->
         <el-row>
             <el-col :span="24">
-                <div class="grid-content bg-purple-dark">
+                <div class="">
                     {{content}}
                 </div>
             </el-col>
@@ -89,8 +89,5 @@
 </script>
 
 <style scoped>
-    .grid-content {
-        border-radius: 4px;
-        min-height: 36px;
-    }
+
 </style>

@@ -1,5 +1,11 @@
 <template>
-    <div style="height: 800px" class="grid-content bg-purple">left</div>
+    <div style="height: 800px" class="">
+        <el-input
+                placeholder="请输入内容"
+                v-model="input4">
+            <i slot="prefix" class="el-input__icon el-icon-search"></i>
+        </el-input>
+    </div>
 </template>
 
 <script>

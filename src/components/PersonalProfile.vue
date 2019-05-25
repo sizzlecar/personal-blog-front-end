@@ -3,7 +3,7 @@
         <p class="font-style">
             {{personalProfileInfo}}
         </p>
-        <div align="center">
+        <div>
             <img src="../assets/weixin.jpg" />
         </div>
     </div>
@@ -27,7 +27,5 @@
         font-size: larger;
         font-weight: bolder;
         color: red;
-        align-content: center;
-        text-align: center;
     }
 </style>

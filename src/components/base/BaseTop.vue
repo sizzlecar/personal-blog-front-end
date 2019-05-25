@@ -1,5 +1,10 @@
 <template>
-    <div class="grid-content bg-purple top">{{topTitle}}</div>
+    <div class="top wrap">
+        <h1 class="site-title">
+            <a href="#" style="color: black">{{websiteName}}</a>
+        </h1>
+        <p class="site-description">{{description}}</p>
+    </div>
 </template>
 
 <script>
@@ -7,22 +12,30 @@
         name: "BaseTop",
         data() {
             return {
-                "topTitle": "一切都是最好的安排 --关致之"
+                "description": "我是做网文相关培训的关致之。",
+                "websiteName": "关致之的个人网站"
             };
         },
-        methods: {
-
-        },
-        components:{
-        }
+        methods: {},
+        components: {}
     }
 </script>
 
 <style scoped>
-    .top{
-        text-align: center;
-        font-size: 20px;
-        font-weight: bolder
+    .top {
+        height: 160px;
+    }
+
+    .site-title {
+        font-size: 2.25rem;
+        color: black !important;
+        font-weight: bolder;
+    }
+
+    .site-description {
+        color: #666;
+        font-size: 0.8125rem;
+        margin-bottom: 0;
     }
 
 

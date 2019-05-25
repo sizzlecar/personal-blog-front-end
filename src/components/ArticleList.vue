@@ -1,16 +1,20 @@
 <template>
     <div>
         <div v-for="(article, index) in articles"
-             :key="index"
-             @click="jumpBlogDetail(article.id)" >
+             :key="index">
             <el-row>
                 <el-col :span="24">
-                    <div style="font-weight: bolder;font-size: larger" class="grid-content bg-purple">{{article.blogTitle}}</div>
+                    <h3 class="entry-title">
+                        <a @click="jumpBlogDetail(article.id)">{{article.blogTitle}}</a>
+                    </h3>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="24">
-                    <div class="grid-content bg-purple">{{article.blogContent}}</div>
+                    <p class="">{{article.blogContent}}</p>
+                    <p>
+                        <el-link @click="jumpBlogDetail(article.id)" type="primary">继续阅读</el-link>
+                    </p>
                 </el-col>
             </el-row>
         </div>
@@ -44,7 +48,6 @@
             },
             //获取文章详情
             jumpBlogDetail: function (blogId) {
-                window.console.log("jumpBlogDetail is running...");
                 this.$router.push({path: '/blog/article-detail/' + `${this.menuId}`+ "/" + `${blogId}`});
             }
 
@@ -69,8 +72,7 @@
 </script>
 
 <style scoped>
-    .grid-content {
-        border-radius: 4px;
-        min-height: 36px;
+    .entry-title{
+        font-size: x-large;
     }
 </style>
