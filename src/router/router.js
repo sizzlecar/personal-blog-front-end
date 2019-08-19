@@ -9,8 +9,7 @@ const routers = [
         path: '/',
         redirect: '/blog' // 访问 ‘/’ 重定向至 ‘/blog'
 
-    }
-    ,{
+    },{
         path: '/blog',
         name: 'Blog',
         component: Blog,
