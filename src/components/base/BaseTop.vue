@@ -1,7 +1,7 @@
 <template>
     <div class="top wrap">
         <h1 class="site-title">
-            <a href="#" style="color: black">{{websiteName}}</a>
+            <span @click="go" style="color: black">{{websiteName}}</span>
         </h1>
         <p class="site-description">{{description}}</p>
     </div>
@@ -16,7 +16,11 @@
                 "websiteName": "关致之的个人网站"
             };
         },
-        methods: {},
+        methods: {
+            go:function () {
+                this.$router.push('/blog/personal-profile');
+            }
+        },
         components: {}
     }
 </script>
@@ -36,6 +40,10 @@
         color: #666;
         font-size: 0.8125rem;
         margin-bottom: 0;
+    }
+
+    .site-title:hover {
+        text-decoration: underline;
     }
 
 
