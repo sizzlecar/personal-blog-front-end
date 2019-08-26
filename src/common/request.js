@@ -7,7 +7,7 @@ axios.defaults.baseURL = '/';
  * @returns {AxiosPromise<any>}
  */
 function getMenu(){
-    return axios.get("/menu");
+    return axios.get("/blog/blog-menu/list");
 }
 
 
@@ -16,7 +16,7 @@ function getMenu(){
  * @returns {AxiosPromise<any>}
  */
 function getBlogList(menuId){
-    return axios.get("/get-blog-list/" + menuId);
+    return axios.get("/blog/list/" + menuId);
 }
 
 
@@ -25,7 +25,7 @@ function getBlogList(menuId){
  * @returns {AxiosPromise<any>}
  */
 function getBlogDetail(menuId, blogId){
-    return axios.get("/get-blog-detail/" + menuId + "/" + blogId);
+    return axios.get("/blog/detail/" + menuId + "/" + blogId);
 }
 
 
