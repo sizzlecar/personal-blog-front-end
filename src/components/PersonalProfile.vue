@@ -1,11 +1,11 @@
 <template>
     <div>
-        <el-card >
+        <a-card >
             <img src="../assets/weixin.jpg" class="image">
             <div>
                 <span class="font-style">{{personalProfileInfo}}</span>
             </div>
-        </el-card>
+        </a-card>
     </div>
 </template>
 

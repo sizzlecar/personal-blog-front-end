@@ -1,16 +1,21 @@
 <template>
     <div style="height: 800px" class="">
-        <el-input
+        <a-input-search
                 placeholder="请输入内容"
-                v-model="input4">
-            <i slot="prefix" class="el-input__icon el-icon-search"></i>
-        </el-input>
+                enterButton
+                @search="onSearch">
+        </a-input-search>
     </div>
 </template>
 
 <script>
     export default {
-        name: "BaseLeft"
+        name: "BaseLeft",
+        methods: {
+            onSearch (value) {
+                window.console.log(value)
+            },
+        },
     }
 </script>
 

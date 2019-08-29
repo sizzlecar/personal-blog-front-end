@@ -5,5 +5,16 @@
 module.exports = {
     devServer: {
         proxy: 'http://localhost:7001'
+    },
+    css: {
+        loaderOptions: {
+            less: {
+                modifyVars: {
+                    'layout-header-background': '#fff',
+                    'layout-sider-background': '#fff',
+                },
+                javascriptEnabled: true
+            }
+        }
     }
 };

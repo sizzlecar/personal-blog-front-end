@@ -1,34 +1,28 @@
 <template>
     <div>
-        <el-row class="site-branding">
-            <el-col :span="24">
+        <a-layout>
+            <a-layout-header>
                 <BaseTop></BaseTop>
-            </el-col>
-        </el-row>
-        <el-row class="navigation-top">
-            <el-col justify="center" :span="24">
-                <BaseHeader></BaseHeader>
-            </el-col>
-        </el-row>
-        <el-row class="site-content">
-            <div class="wrap">
-                <el-col :span="18">
+            </a-layout-header>
+            <a-layout>
+                <a-layout-sider>
+                    <BaseLeft></BaseLeft>
+                </a-layout-sider>
+                <a-layout-content>
                     <router-view></router-view>
-                </el-col>
-                <el-col :span="6">
-                    <BaseRight></BaseRight>
-                </el-col>
-            </div>
-        </el-row>
+                </a-layout-content>
+            </a-layout>
+            <a-layout-footer style="text-align: center">
+                关致之的个人网站 ©2019 Created by carl
+            </a-layout-footer>
+        </a-layout>
     </div>
-
 </template>
 
 <script>
     //import 组件时就算是同级目录也要加上./ 否则会找不到这个组件
-    import BaseHeader from './base/BaseHeader.vue';
     import BaseTop from './base/BaseTop.vue';
-    import BaseRight from "./base/BaseRight";
+    import BaseLeft from "./base/BaseLeft";
 
     export default {
         name: 'Blog',
@@ -37,35 +31,12 @@
         },
         methods: {},
         components: {
-            BaseRight,
-            BaseHeader,
-            BaseTop
+            BaseTop,
+            BaseLeft
         }
     }
 </script>
 
 <style scoped>
-    .wrap {
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 900px;
-        padding-left: 2em;
-        padding-right: 2em;
-    }
-
-    .navigation-top {
-        background: #fff;
-        border-bottom: 1px solid #eee;
-        border-top: 1px solid #eee;
-        position: relative;
-    }
-
-    .site-branding {
-        background-color: #fafafa;
-    }
-
-    .site-content {
-        padding: 5.5em 0 0;
-    }
 
 </style>

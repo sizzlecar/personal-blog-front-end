@@ -1,30 +1,44 @@
 <template>
     <div>
-        <!--标题-->
-        <el-row>
-            <el-col :span="24">
-                <h1 class="">
-                    {{title}}
-                </h1>
-            </el-col>
-        </el-row>
-        <!--内容-->
-        <el-row>
-            <el-col :span="24">
-                <div class="">
-                    {{content}}
-                </div>
-            </el-col>
-        </el-row>
-        <!--评论-->
-        <el-row>
-            <el-col :span="24">
-                <div v-for="comment in comments"
-                     :key="comment.id">
-                    {{comment.blogComment}}
-                </div>
-            </el-col>
-        </el-row>
+        <div>
+            <a-card :loading="false" title="title">
+                {{content}}
+            </a-card>
+        </div>
+
+
+        <a-list v-if="comments.length"
+                :dataSource="comments"
+                :header="`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`"
+                itemLayout="horizontal">
+            <a-list-item slot="renderItem" slot-scope="item,index">
+                <a-comment
+                        :author="item.author"
+                        :avatar="item.avatar"
+                        :content="item.blogComment"
+                        :datetime="item.datetime">
+                </a-comment>
+            </a-list-item>
+        </a-list>
+        <a-comment>
+            <a-avatar
+                    slot="avatar"
+                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                    alt="Han Solo"/>
+            <div slot="content">
+                <a-form-item>
+                    <a-textarea :rows="4" @change="handleChange" :value="value" ></a-textarea>
+                </a-form-item>
+                <a-form-item>
+                    <a-button
+                            htmlType="submit"
+                            @click="handleSubmit"
+                            type="primary">
+                        Add Comment
+                    </a-button>
+                </a-form-item>
+            </div>
+        </a-comment>
 
     </div>
 </template>

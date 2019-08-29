@@ -1,33 +1,11 @@
 <template>
-    <el-collapse>
-        <el-collapse-item v-for="(article, index) in articles"
-             :key="index" :title="article.blogTitle">
-
-
-            <div>
-                {{article.blogContent}}
-            </div>
-            <div>
-                <el-link @click="jumpBlogDetail(article.id)" type="primary">继续阅读</el-link>
-            </div>
-
-            <!--<el-row>
-                <el-col :span="24">
-                    <h3 class="entry-title">
-                        <a @click="jumpBlogDetail(article.id)">{{article.blogTitle}}</a>
-                    </h3>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="24">
-                    <p class="">{{article.blogContent}}</p>
-                    <p>
-                        <el-link @click="jumpBlogDetail(article.id)" type="primary">继续阅读</el-link>
-                    </p>
-                </el-col>
-            </el-row>-->
-        </el-collapse-item>
-    </el-collapse>
+    <div>
+        <a-card v-for="(article, index) in articles"
+                :key="index" :title="article.blogTitle">
+            <span slot="extra" @click="jumpBlogDetail(article.id)">继续阅读</span>
+            <p>{{article.blogContent}}</p>
+        </a-card>
+    </div>
 </template>
 
 <script>
