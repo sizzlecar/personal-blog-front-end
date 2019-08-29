@@ -1,7 +1,10 @@
 <template>
-    <div>
+    <div class="main-container">
         <a-card v-for="(article, index) in articles"
-                :key="index" :title="article.blogTitle">
+                :key="index"
+                :hoverable = "true"
+                class="code-box"
+                :title="article.blogTitle">
             <span slot="extra" @click="jumpBlogDetail(article.id)">继续阅读</span>
             <p>{{article.blogContent}}</p>
         </a-card>
@@ -61,5 +64,16 @@
 <style scoped>
     .entry-title{
         font-size: x-large;
+    }
+    .code-box{
+        margin: 0 0 16px;
+    }
+
+    .main-container {
+        padding: 0 300px 144px 64px;
+        background: #fff;
+        min-height: 500px;
+        overflow: hidden;
+        position: relative;
     }
 </style>

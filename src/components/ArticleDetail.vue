@@ -1,17 +1,15 @@
 <template>
-    <div>
+    <div class="main-container">
         <div>
             <a-card :loading="false" title="title">
                 {{content}}
             </a-card>
         </div>
-
-
         <a-list v-if="comments.length"
                 :dataSource="comments"
                 :header="`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`"
                 itemLayout="horizontal">
-            <a-list-item slot="renderItem" slot-scope="item,index">
+            <a-list-item slot="renderItem" slot-scope="item, index">
                 <a-comment
                         :author="item.author"
                         :avatar="item.avatar"
@@ -21,10 +19,6 @@
             </a-list-item>
         </a-list>
         <a-comment>
-            <a-avatar
-                    slot="avatar"
-                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                    alt="Han Solo"/>
             <div slot="content">
                 <a-form-item>
                     <a-textarea :rows="4" @change="handleChange" :value="value" ></a-textarea>
@@ -39,7 +33,6 @@
                 </a-form-item>
             </div>
         </a-comment>
-
     </div>
 </template>
 
@@ -62,7 +55,8 @@
             return {
                 content: '',
                 title: '',
-                comments:[]//评论
+                comments:[],//评论
+                value: null
             };
         },
         methods: {
@@ -81,6 +75,14 @@
                     this.title = res.data.blogTitle;
                     this.comments = res.data.blogComments;
                 });
+
+            },
+
+            handleSubmit: function () {
+
+            },
+
+            handleChange: function () {
 
             }
 
@@ -103,5 +105,11 @@
 </script>
 
 <style scoped>
-
+    .main-container {
+        padding: 0 300px 144px 64px;
+        background: #fff;
+        min-height: 500px;
+        overflow: hidden;
+        position: relative;
+    }
 </style>

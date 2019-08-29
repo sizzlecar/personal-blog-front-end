@@ -1,10 +1,16 @@
 <template>
-    <div>
-        <a-card >
-            <img src="../assets/weixin.jpg" class="image">
-            <div>
-                <span class="font-style">{{personalProfileInfo}}</span>
-            </div>
+    <div class="main-container">
+
+        <a-card hoverable>
+            <img alt="扫描二维码"
+                 class="image"
+                 src="../assets/weixin.jpg"
+                 slot="cover" />
+            <a-card-meta
+                    title="关致之的公众号"
+                    class="font-style">
+                <template slot="description">{{personalProfileInfo}}</template>
+            </a-card-meta>
         </a-card>
     </div>
 </template>
@@ -25,5 +31,19 @@
         font-size: larger;
         font-weight: bolder;
         color: red;
+    }
+
+    .main-container {
+        padding: 0 300px 144px 64px;
+        background: #fff;
+        min-height: 500px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .image{
+        width: 300px;
+        height: 300px;
+
     }
 </style>
