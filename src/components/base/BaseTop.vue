@@ -1,10 +1,10 @@
 <template>
-    <div>
+    <div >
         <a-row type="flex">
-            <a-col :span="3" :order="1">
-                <span @click="go" style="color: black">{{websiteName}}</span>
+            <a-col :span="3" :order="1" class="logo">
+                <img alt="关致之" src="../../assets/wechat_logo.jpg" @click="go"  class="image"/>
             </a-col>
-            <a-col :span="15" :order="2">
+            <a-col :span="12" :order="2" class="search-box">
                 <a-input-search
                     placeholder="请输入要查找的内容"
                     style="width: 200px; border-color: rgb(255, 255, 255)"
@@ -42,6 +42,9 @@
             },
             onSearch: function () {
 
+            },
+            onClick: function () {
+
             }
         },
         components: {}
@@ -64,6 +67,23 @@
 
     .site-title:hover {
         text-decoration: underline;
+    }
+    .image{
+        width: 45px;
+        height: 45px;
+    }
+    .search-box {
+        float: left;
+        height: 22px;
+        line-height: 22px;
+        margin: 22px auto 0;
+    }
+    .logo {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding-left: 8px;
+        border-right: 1px solid #ebedf0;
+        line-height: 90%;
     }
 
 
