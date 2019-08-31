@@ -34,6 +34,7 @@
                 </a-sub-menu>
             </a-sub-menu>
         </a-menu>
+        <a-back-top />
     </div>
 
 </template>
@@ -107,5 +108,12 @@
 </script>
 
 <style scoped>
-
+    .side{
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 200px;
+        z-index: 10;
+        overflow: auto;
+    }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div>
         <a-layout>
             <a-layout-header class="header">
                 <BaseTop></BaseTop>
