@@ -70,7 +70,6 @@
             getBlogDetail: function (menuId, blogId) {
                 getBlogDetail(menuId, blogId).then(res => {
                     //获取菜单数据
-                    window.console.log(res);
                     this.content = res.data.blogContent;
                     this.title = res.data.blogTitle;
                     this.comments = res.data.blogComments;

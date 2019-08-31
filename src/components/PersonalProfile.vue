@@ -1,6 +1,5 @@
 <template>
     <div class="main-container">
-
         <a-card hoverable>
             <img alt="扫描二维码"
                  class="image"

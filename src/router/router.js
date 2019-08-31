@@ -1,7 +1,7 @@
 import Blog from '../components/Blog';
 import ArticleList from '../components/ArticleList';
 import ArticleDetail from '../components/ArticleDetail';
-import PersonalProfile from '../components/PersonalProfile';
+import BaseCard from '../components/base/BaseCard';
 
 const routers = [
 
@@ -26,8 +26,13 @@ const routers = [
                 props: true
             },{
                 path: '/blog/personal-profile',
-                name: 'PersonalProfile',
-                component: PersonalProfile
+                name: 'BaseCard',
+                component: BaseCard,
+                props: (route)  => ({
+                    initImagePath: route.params.imagePath,
+                    initTitle: route.params.title,
+                    initDescription: route.params.description
+                })
             }
 
         ],
