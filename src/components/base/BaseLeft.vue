@@ -1,6 +1,6 @@
 <template>
 
-    <div>
+    <div :class="scrollTop > 64 ? sider : ''">
         <a-menu mode="inline"
                 @click="click">
             <a-menu-item v-for="item in getMenuItems(this.menu, 0)"
@@ -46,7 +46,9 @@
             return {
                 activeIndex: '1',
                 menu:[],
-                rootPath: '/blog/article-list/'
+                rootPath: '/blog/article-list/',
+                scrollTop: 0,
+                sider: "side"
             };
 
         },
@@ -78,6 +80,12 @@
                     }
                 });
                 return subMenuItems;
+            },
+            handleScroll() {
+                this.scrollTop =
+                    window.pageYOffset ||
+                    document.documentElement.scrollTop ||
+                    document.body.scrollTop;
             }
 
         },
@@ -86,6 +94,14 @@
                 //获取菜单数据
                 this.menu = res.data;
             });
+        },
+
+        mounted() {
+            window.addEventListener('scroll', this.handleScroll, true)
+        },
+
+        destroyed() {
+            window.removeEventListener("scroll", this.handleScroll);
         }
     }
 </script>
