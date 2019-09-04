@@ -37,12 +37,12 @@
             goPersonProfile: function () {
                 window.console.log('点击了goPersonProfile');
                 let params = {
-                    imagePath : "../../assets/weixin.jpg",
+                    imagePath : require("../../assets/weixin.jpg"),
                     title : "我是小说大魔王关致之",
                     description: "欢迎来到关致之的个人网站,请关注我的公共号了解更多。"
                 };
                 // 注意：如果提供了 path，params 会被忽略,你需要提供路由的 name 或手写完整的带有参数的 path：
-                this.$router.push({name: 'BaseCard', params: params});
+                this.$router.push({path: '/blog/personal-profile', query: params});
             },
 
             onSearch: function () {
@@ -53,16 +53,13 @@
             },
 
             goSponsor: function (e) {
-                window.console.log('点击了goSponsor');
-                window.console.log('e');
                 if(e.key === 'sponsor'){
-                    window.console.log('===');
                     let params = {
-                        imagePath : "../../assets/collect_money.jpg",
+                        imagePath : require("../../assets/collect_money.jpg"),
                         title : "赞助我的网站持续输出",
                         description: "如果本网站给你带来了帮助，你可以用捐助来表示你的谢意 —— 就好像偶尔给我买杯咖啡 :)"
                     };
-                    this.$router.push({name: 'BaseCard', params: params});
+                    this.$router.push({path: '/blog/personal-profile', query: params});
 
                 }
             }

@@ -27,12 +27,7 @@ const routers = [
             },{
                 path: '/blog/personal-profile',
                 name: 'BaseCard',
-                component: BaseCard,
-                props: (route)  => ({
-                    initImagePath: route.params.imagePath,
-                    initTitle: route.params.title,
-                    initDescription: route.params.description
-                })
+                component: BaseCard
             }
 
         ],

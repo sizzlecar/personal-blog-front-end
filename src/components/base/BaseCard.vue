@@ -17,49 +17,39 @@
 <script>
     export default {
         name: "BaseCard",
-        props: {
-            initImagePath: {
-                type: String,
-                default: ''
-            },
-            initTitle: {
-                type: String,
-                default: ''
-            },
-            initDescription: {
-                type: String,
-                default: ''
-            }
-        },
         data() {
             return {
-                imagePath: this.initImagePath,
-                title: this.initTitle,
-                description: this.initDescription,
-
+                imagePath: null,
+                title: null,
+                description: null,
             };
         },
-        methods:{
-
+        methods: {
+            getImagePath: function () {
+                return require(this.imagePath);
+            }
         },
         created: function () {
-            window.console.log(this.imagePath);
+            this.imagePath = require('../../assets/weixin.jpg');
+            this.title = '我是小说大魔王关致之';
+            this.description = '欢迎来到关致之的个人网站,请关注我的公共号了解更多。';
         },
-
-        beforeRouteEnter (to, from, next) {
+        beforeRouteEnter(to, from, next) {
             next(vm => {
                 // 通过 `vm` 访问组件实例
-                window.console.log(vm.$router);
+                vm.imagePath = to.query.imagePath;
+                vm.title = to.query.title;
+                vm.description = to.query.description;
             });
         },
-        beforeRouteUpdate (to, from, next) {
+        beforeRouteUpdate(to, from, next) {
             // just use `this`
-            window.console.log(this.$router);
+            this.imagePath = to.query.imagePath;
+            this.title = to.query.title;
+            this.description = to.query.description;
             next();
         },
         mounted() {
-            window.console.log('i am change');
-
         }
     }
 </script>
