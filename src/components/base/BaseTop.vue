@@ -7,7 +7,7 @@
             <a-col :span="12" :order="2" class="search-box">
                 <a-input-search
                     placeholder="请输入要查找的内容"
-                    style="width: 200px; border-color: rgb(255, 255, 255)"
+                    class="input-box"
                     @search="onSearch"/>
             </a-col>
             <a-col :span="6" :order="3">
@@ -102,6 +102,11 @@
         border-right: 1px solid #ebedf0;
         line-height: 90%;
     }
+
+    .input-box{
+        width: 30%;
+    }
+
 
 
 </style>
