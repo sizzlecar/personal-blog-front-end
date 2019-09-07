@@ -12,6 +12,7 @@ module.exports = {
                 modifyVars: {
                     'layout-header-background': '#fff',
                     'layout-sider-background': '#fff',
+                    'layout-trigger-background': '#fff',
                 },
                 javascriptEnabled: true
             }

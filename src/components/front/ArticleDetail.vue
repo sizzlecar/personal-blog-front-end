@@ -37,7 +37,7 @@
 </template>
 
 <script>
-    import {getBlogDetail} from '../common/request';
+    import {getBlogDetail} from '../../common/request';
     export default {
         name: "ArticleDetail",
         props: {

@@ -40,7 +40,7 @@
 </template>
 
 <script>
-    import {getMenu} from '../../common/request';
+    import {getMenu} from '../../../common/request';
     export default {
         name: "BaseLeft",
         data() {

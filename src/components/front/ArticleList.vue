@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import {getBlogList} from '../common/request';
+    import {getBlogList} from '../../common/request';
     export default {
         name: "ArticleList",
         props: {

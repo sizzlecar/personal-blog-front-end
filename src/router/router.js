@@ -1,7 +1,9 @@
-import Blog from '../components/Blog';
-import ArticleList from '../components/ArticleList';
-import ArticleDetail from '../components/ArticleDetail';
-import BaseCard from '../components/base/BaseCard';
+import Blog from '../components/front/Blog';
+import ArticleList from '../components/front/ArticleList';
+import ArticleDetail from '../components/front/ArticleDetail';
+import BaseCard from '../components/front/base/BaseCard';
+import Management from '../components/management/Management';
+import BlogEdit from '../components/management/BlogEdit';
 
 const routers = [
 
@@ -32,6 +34,19 @@ const routers = [
 
         ],
         redirect: '/blog/personal-profile'//如果直接访问 /blog 会重定向到 /blog/personal-profile
+    },{
+        path: '/management',
+        name: 'Management',
+        component: Management,
+        children: [
+            {
+                path: '/management/blog/add-blog',
+                name: 'BlogEdit',
+                component: BlogEdit,
+                props: true
+            }
+        ],
+        redirect: '/management/blog/add-blog'//如果直接访问 /blog 会重定向到 /blog/personal-profile
     }
 
 

@@ -1,14 +1,14 @@
 <template>
-    <div >
+    <div>
         <a-row type="flex">
             <a-col :span="3" :order="1" class="logo">
-                <img alt="关致之" src="../../assets/wechat_logo.jpg" @click="goPersonProfile"  class="image"/>
+                <img alt="关致之" src="../../../assets/wechat_logo.jpg" @click="goPersonProfile" class="image"/>
             </a-col>
             <a-col :span="12" :order="2" class="search-box">
                 <a-input-search
-                    placeholder="请输入要查找的内容"
-                    class="input-box"
-                    @search="onSearch"/>
+                        placeholder="请输入要查找的内容"
+                        class="input-box"
+                        @search="onSearch"/>
             </a-col>
             <a-col :span="6" :order="3">
                 <a-menu mode="horizontal"
@@ -16,6 +16,9 @@
                         @click="goSponsor">
                     <a-menu-item key="sponsor">
                         支持我们
+                    </a-menu-item>
+                    <a-menu-item key="login">
+                        登陆
                     </a-menu-item>
                 </a-menu>
 
@@ -37,8 +40,8 @@
             goPersonProfile: function () {
                 window.console.log('点击了goPersonProfile');
                 let params = {
-                    imagePath : require("../../assets/weixin.jpg"),
-                    title : "我是小说大魔王关致之",
+                    imagePath: require("../../../assets/weixin.jpg"),
+                    title: "我是小说大魔王关致之",
                     description: "欢迎来到关致之的个人网站,请关注我的公共号了解更多。"
                 };
                 // 注意：如果提供了 path，params 会被忽略,你需要提供路由的 name 或手写完整的带有参数的 path：
@@ -53,14 +56,16 @@
             },
 
             goSponsor: function (e) {
-                if(e.key === 'sponsor'){
+                if (e.key === 'sponsor') {
                     let params = {
-                        imagePath : require("../../assets/collect_money.jpg"),
-                        title : "赞助我的网站持续输出",
+                        imagePath: require("../../../assets/collect_money.jpg"),
+                        title: "赞助我的网站持续输出",
                         description: "如果本网站给你带来了帮助，你可以用捐助来表示你的谢意 —— 就好像偶尔给我买杯咖啡 :)"
                     };
                     this.$router.push({path: '/blog/personal-profile', query: params});
 
+                } else if (e.key === 'login') {
+                    this.$router.push({path: '/management'});
                 }
             }
         },
@@ -85,16 +90,19 @@
     .site-title:hover {
         text-decoration: underline;
     }
-    .image{
+
+    .image {
         width: 45px;
         height: 45px;
     }
+
     .search-box {
         float: left;
         height: 22px;
         line-height: 22px;
         margin: 22px auto 0;
     }
+
     .logo {
         margin-top: 5px;
         margin-bottom: 5px;
@@ -103,10 +111,9 @@
         line-height: 90%;
     }
 
-    .input-box{
+    .input-box {
         width: 30%;
     }
-
 
 
 </style>

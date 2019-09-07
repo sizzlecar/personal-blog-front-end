@@ -30,7 +30,7 @@
             }
         },
         created: function () {
-            this.imagePath = require('../../assets/weixin.jpg');
+            this.imagePath = require('../../../assets/weixin.jpg');
             this.title = '我是小说大魔王关致之';
             this.description = '欢迎来到关致之的个人网站,请关注我的公共号了解更多。';
         },
