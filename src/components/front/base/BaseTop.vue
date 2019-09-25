@@ -24,16 +24,76 @@
 
             </a-col>
         </a-row>
+        <a-modal
+                title="登陆"
+                :visible="visible"
+                :footer="null"
+                @cancel="handleCancel">
+            <a-form
+                    id="components-form-demo-normal-login"
+                    :form="form"
+                    class="login-form"
+                    @submit="handleSubmit">
+                <a-form-item>
+                    <a-input
+                            v-decorator="['account', { rules: [{ required: true, message: '请输入账号' }] }]"
+                            placeholder="账号">
+                        <a-icon
+                                slot="prefix"
+                                type="user"
+                                style="color: rgba(0,0,0,.25)"
+                        />
+                    </a-input>
+                </a-form-item>
+                <a-form-item>
+                    <a-input
+                            v-decorator="['password',{ rules: [{ required: true, message: '请输入密码' }] }]"
+                            type="password"
+                            placeholder="密码"
+                    >
+                        <a-icon
+                                slot="prefix"
+                                type="lock"
+                                style="color: rgba(0,0,0,.25)"
+                        />
+                    </a-input>
+                </a-form-item>
+                <a-form-item>
+                    <a-checkbox
+                            v-decorator="['remember',{valuePropName: 'checked',initialValue: true,}]">
+                        记住我
+                    </a-checkbox>
+                    <a class="login-form-forgot"
+                            href="">
+                        忘记密码
+                    </a>
+                    <a-button
+                            type="primary"
+                            html-type="submit"
+                            class="login-form-button"
+                    >
+                        登陆
+                    </a-button>
+                    或 <a href="">
+                    注册
+                </a>
+                </a-form-item>
+            </a-form>
+        </a-modal>
     </div>
 </template>
 
 <script>
+    import {login,setToken} from '../../../common/request';
     export default {
         name: "BaseTop",
         data() {
             return {
                 "description": "我是做网文相关培训的关致之。",
-                "websiteName": "关致之的个人网站"
+                "websiteName": "关致之的个人网站",
+                "visible": false,
+                "confirmLoading": true
+
             };
         },
         methods: {
@@ -65,9 +125,40 @@
                     this.$router.push({path: '/blog/personal-profile', query: params});
 
                 } else if (e.key === 'login') {
-                    this.$router.push({path: '/management'});
+                    //弹出
+                    this.visible = true;
+
+
+
                 }
+            },
+            handleCancel: function () {
+                this.visible = false;
+                this.form.setFieldsValue({"account" : null, "password" : null});
+            },
+            handleSubmit: function (e) {
+                e.preventDefault();
+                this.form.validateFields((err, values) => {
+                    if (!err) {
+                        window.console.log('Received values of form: ', values);
+                        login(values).then(res => {
+                            if(res.data.code !== "0"){
+                                this.$message.error(res.data.message);
+                            }else {
+                                this.$message.success(res.data.message);
+                                this.visible = false;//关闭登陆模态框
+                                //保存token
+                                window.localStorage.setItem("token", res.data.data.token);
+                                setToken();
+                                this.$router.push({path: '/management'});
+                            }
+                        })
+                    }
+                });
             }
+        },
+        beforeCreate () {
+            this.form = this.$form.createForm(this);
         },
         components: {}
     }
