@@ -8,7 +8,7 @@
                 <a-input-search
                         placeholder="请输入要查找的内容"
                         class="input-box"
-                        @search="onSearch"/>
+                        @search="onSearch"></a-input-search>
             </a-col>
             <a-col :span="6" :order="3">
                 <a-menu mode="horizontal"

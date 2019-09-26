@@ -4,14 +4,15 @@
             <ManagementTop></ManagementTop>
         </a-layout-header>
         <a-layout class="main-wrapper">
-            <a-layout-sider collapsible="true">
+            <a-layout-sider>
                 <ManagementLeft></ManagementLeft>
             </a-layout-sider>
             <a-layout-content>
                 <router-view></router-view>
             </a-layout-content>
+            <div class="push"></div>
         </a-layout>
-        <a-layout-footer style="text-align: center;">
+        <a-layout-footer class="footer">
             关致之的个人网站 ©2019 Created by carl
         </a-layout-footer>
     </a-layout>
@@ -43,6 +44,14 @@
         background: #fff;
         padding: 40px 0 0;
         position: relative;
+        min-height: 800px;
+        margin-bottom: -21px;
+    }
 
+    .footer{
+        text-align: center;
+    }
+    .push{
+        height: 21px;
     }
 </style>

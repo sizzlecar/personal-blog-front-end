@@ -7,7 +7,7 @@ axios.defaults.baseURL = '/';
 function setToken() {
     const token = window.localStorage.getItem("token");
     if(token){
-        axios.defaults.headers.common['Authorization'] = token;
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' +  token;
     }
 }
 
