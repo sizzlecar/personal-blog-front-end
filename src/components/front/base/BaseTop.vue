@@ -12,13 +12,12 @@
             </a-col>
             <a-col :span="6" :order="3">
                 <a-menu mode="horizontal"
-                        style="width: 35%"
                         @click="goSponsor">
                     <a-menu-item key="sponsor">
                         支持我们
                     </a-menu-item>
                     <a-menu-item key="login">
-                        登陆
+                        {{isLogin ? '注销' : '登陆'}}
                     </a-menu-item>
                 </a-menu>
 
@@ -84,7 +83,7 @@
 </template>
 
 <script>
-    import {login,setToken} from '../../../common/request';
+    import {login,setToken, isLogin, clearToken} from '../../../common/request';
     export default {
         name: "BaseTop",
         data() {
@@ -92,7 +91,8 @@
                 "description": "我是做网文相关培训的关致之。",
                 "websiteName": "关致之的个人网站",
                 "visible": false,
-                "confirmLoading": true
+                "confirmLoading": true,
+                isLogin: isLogin()
 
             };
         },
@@ -125,15 +125,23 @@
                     this.$router.push({path: '/blog/personal-profile', query: params});
 
                 } else if (e.key === 'login') {
-                    //弹出
-                    this.visible = true;
 
+                    if(isLogin()){
+                        //注销
+                        clearToken();
+                        this.isLogin = false;
+                        this.$message.success('您已退出登陆！');
+                    }else {
+                        //弹出
+                        this.visible = true;
+                    }
 
 
                 }
             },
             handleCancel: function () {
                 this.visible = false;
+                // 清空输入框
                 this.form.setFieldsValue({"account" : null, "password" : null});
             },
             handleSubmit: function (e) {
@@ -155,7 +163,8 @@
                         })
                     }
                 });
-            }
+            },
+
         },
         beforeCreate () {
             this.form = this.$form.createForm(this);

@@ -13,7 +13,11 @@ function setToken() {
 
 function clearToken() {
     window.localStorage.removeItem("token");
-    axios.defaults.headers.common['Authorization'] = null;
+    axios.defaults.headers.common['Authorization'] = '';
+}
+
+function isLogin() {
+    return !!axios.defaults.headers.common['Authorization'];
 }
 
 /**
@@ -52,4 +56,4 @@ function login(form) {
 
 
 
-export{getMenu, getBlogList, getBlogDetail, login,setToken,clearToken}
+export{getMenu, getBlogList, getBlogDetail, login, setToken, clearToken, isLogin}
