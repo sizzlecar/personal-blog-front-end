@@ -1,12 +1,65 @@
 <template>
-
     <div>
         <a-card
                 :hoverable = "true"
                 class="code-box"
                 title="">
-            <a-button>保存</a-button>
-            <mavon-editor :toolbars="toolbars" :scrollStyle="true"></mavon-editor>
+            <a-form
+                    :form="form"
+                    @submit="handleSubmit"
+            >
+                <a-form-item
+                        v-bind="formItemLayout"
+                        label="标题"
+                >
+                    <a-input
+                            v-decorator="[
+          'title',
+          {
+            rules: [{
+              type: 'email', message: 'The input is not valid E-mail!',
+            }, {
+              required: true, message: 'Please input your E-mail!',
+            }]
+          }
+        ]"
+                    />
+                </a-form-item>
+
+                <a-form-item
+                        v-bind="formItemLayout"
+                        label="简介"
+                >
+                    <a-textarea
+                            v-decorator="[
+          'desc',
+          {
+            rules: [{
+              type: 'email', message: 'The input is not valid E-mail!',
+            }, {
+              required: true, message: 'Please input your E-mail!',
+            }]
+          }
+        ]"></a-textarea>
+                </a-form-item>
+
+                <a-form-item
+                        v-bind="formItemLayout"
+                        label="正文"
+                >
+                    <mavon-editor :toolbars="toolbars" :scrollStyle="true"></mavon-editor>
+
+                </a-form-item>
+
+                <a-form-item v-bind="tailFormItemLayout">
+                    <a-button
+                            type="primary"
+                            html-type="submit"
+                    >
+                        Register
+                    </a-button>
+                </a-form-item>
+            </a-form>
         </a-card>
     </div>
 

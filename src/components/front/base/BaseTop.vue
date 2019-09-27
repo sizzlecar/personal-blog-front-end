@@ -19,6 +19,9 @@
                     <a-menu-item key="login">
                         {{isLogin ? '注销' : '登陆'}}
                     </a-menu-item>
+                    <a-menu-item v-if="isLogin" key="management">
+                        后台管理
+                    </a-menu-item>
                 </a-menu>
 
             </a-col>
@@ -135,8 +138,8 @@
                         //弹出
                         this.visible = true;
                     }
-
-
+                }else if (e.key === 'management') {
+                    this.$router.push({path: '/management'});
                 }
             },
             handleCancel: function () {
