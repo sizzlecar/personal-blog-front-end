@@ -93,17 +93,13 @@
             handleSubmit  (e) {
                 e.preventDefault();
                 this.form.validateFieldsAndScroll((err, values) => {
-                    window.console.log("content:" + this.content);
                     if (!err) {
-                        this.form.setFieldsValue({"content" : this.content});
+                        values.content = this.content;
                         window.console.log('Received values of form: ', values);
                     }
                 });
             },
-        },
-        beforeCreate () {
-            this.form = this.$form.createForm(this);
-        },
+        }
     }
 </script>
 
