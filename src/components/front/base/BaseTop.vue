@@ -145,7 +145,7 @@
             handleCancel: function () {
                 this.visible = false;
                 // 清空输入框
-                this.form.setFieldsValue({"account" : null, "password" : null});
+                this.form.resetFields();
             },
             handleSubmit: function (e) {
                 e.preventDefault();

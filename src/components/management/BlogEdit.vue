@@ -3,60 +3,38 @@
         <a-card
                 :hoverable = "true"
                 class="code-box"
-                title="">
+                title="编辑博客">
             <a-form
                     :form="form"
-                    @submit="handleSubmit"
-            >
+                    @submit="handleSubmit">
                 <a-form-item
-                        v-bind="formItemLayout"
-                        label="标题"
-                >
+                        label="标题">
                     <a-input
-                            v-decorator="[
-          'title',
-          {
-            rules: [{
-              type: 'email', message: 'The input is not valid E-mail!',
-            }, {
-              required: true, message: 'Please input your E-mail!',
-            }]
-          }
-        ]"
-                    />
+                            v-decorator="[ 'title', {rules: [{required: true, message: '请输入标题',},{max: 30, message: '标题长度不能超过30',}]}]"/>
                 </a-form-item>
 
                 <a-form-item
-                        v-bind="formItemLayout"
-                        label="简介"
-                >
+                        label="简介">
                     <a-textarea
-                            v-decorator="[
-          'desc',
-          {
-            rules: [{
-              type: 'email', message: 'The input is not valid E-mail!',
-            }, {
-              required: true, message: 'Please input your E-mail!',
-            }]
-          }
-        ]"></a-textarea>
+                            v-decorator="['desc',{rules: [{max: 200, message: '简介长度不能超过200',}, {required: true, message: '请输入简介',}]}]">
+                    </a-textarea>
                 </a-form-item>
 
                 <a-form-item
-                        v-bind="formItemLayout"
-                        label="正文"
-                >
-                    <mavon-editor :toolbars="toolbars" :scrollStyle="true"></mavon-editor>
+                        label="正文" >
+                    <mavon-editor
+                            v-model="content"
+                            :toolbars="toolbars"
+                            :scrollStyle="true">
+                    </mavon-editor>
 
                 </a-form-item>
 
-                <a-form-item v-bind="tailFormItemLayout">
+                <a-form-item >
                     <a-button
                             type="primary"
-                            html-type="submit"
-                    >
-                        Register
+                            html-type="submit">
+                        提交
                     </a-button>
                 </a-form-item>
             </a-form>
@@ -104,8 +82,27 @@
                     subfield: true, // 单双栏模式
                     preview: true, // 预览
                     save: true // 保存（触发events中的save事件）
-                }
+                },
+                form : this.$form.createForm(this),
+                content: "今晚打老虎"
             };
+        },
+
+        methods: {
+
+            handleSubmit  (e) {
+                e.preventDefault();
+                this.form.validateFieldsAndScroll((err, values) => {
+                    window.console.log("content:" + this.content);
+                    if (!err) {
+                        this.form.setFieldsValue({"content" : this.content});
+                        window.console.log('Received values of form: ', values);
+                    }
+                });
+            },
+        },
+        beforeCreate () {
+            this.form = this.$form.createForm(this);
         },
     }
 </script>
