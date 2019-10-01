@@ -6,7 +6,7 @@
                 class="code-box"
                 :title="article.blogTitle">
             <span slot="extra" @click="jumpBlogDetail(article.id)">继续阅读</span>
-            <p>{{article.blogContent}}</p>
+            <p>{{article.blogDesc}}</p>
         </a-card>
     </div>
 </template>

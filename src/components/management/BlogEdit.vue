@@ -44,6 +44,8 @@
 </template>
 
 <script>
+    import {addBlog} from '../../common/request';
+
     export default {
         name: "BlogEdit",
         data() {
@@ -96,6 +98,9 @@
                     if (!err) {
                         values.content = this.content;
                         window.console.log('Received values of form: ', values);
+                        addBlog(values).then(res => {
+                            window.console.log(res);
+                        })
                     }
                 });
             },

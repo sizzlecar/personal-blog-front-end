@@ -53,7 +53,11 @@ function login(form) {
     return axios.post('/blog/user/login', form)
 }
 
+function addBlog(blog) {
+    return axios.post('/blog/management/blog/add', blog);
+}
 
 
 
-export{getMenu, getBlogList, getBlogDetail, login, setToken, clearToken, isLogin}
+
+export{getMenu, getBlogList, getBlogDetail, login, setToken, clearToken, isLogin, addBlog}

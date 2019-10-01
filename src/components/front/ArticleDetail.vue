@@ -1,8 +1,8 @@
 <template>
     <div class="main-container">
         <div>
-            <a-card :loading="false" title="title">
-                {{content}}
+            <a-card :loading="false" :title="title" >
+                <span v-html="content"></span>
             </a-card>
         </div>
         <a-list v-if="comments.length"
@@ -72,7 +72,9 @@
                     //获取菜单数据
                     this.content = res.data.blogContent;
                     this.title = res.data.blogTitle;
-                    this.comments = res.data.blogComments;
+                    if(res.data.blogComments){
+                        this.comments = res.data.blogComments;
+                    }
                 });
 
             },
