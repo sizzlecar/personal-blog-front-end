@@ -9,8 +9,8 @@
                     <a-dropdown>
                         <a-icon type="user" />
                         <a-menu slot="overlay" @click="onClick">
-                            <a-menu-item key="1">注销登陆</a-menu-item>
-                            <a-menu-item key="2">修改密码</a-menu-item>
+                            <a-menu-item key="logout">注销</a-menu-item>
+                            <a-menu-item key="updatePwd">修改密码</a-menu-item>
                         </a-menu>
                     </a-dropdown>
                 </div>
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+    import {clearToken} from '../../common/request';
     export default {
         name: "BaseTop",
         data() {
@@ -39,7 +40,17 @@
                 // 注意：如果提供了 path，params 会被忽略,你需要提供路由的 name 或手写完整的带有参数的 path：
                 this.$router.push({path: '/blog/personal-profile', query: params});
             },
-            onClick: function () {
+            onClick: function (e) {
+                window.console.log(e);
+                if(e.key === 'logout'){
+                    clearToken();
+                    this.$message.success('您已退出登陆！');
+                    this.goPersonProfile();
+                }else if(e.key === 'updatePwd') {
+                    window.console.log('updatePwd');
+                }
+
+
             }
         },
         components: {}

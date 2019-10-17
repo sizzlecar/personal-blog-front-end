@@ -2,7 +2,7 @@
     <div class="main-container">
         <div>
             <a-card :loading="false" :title="title" >
-                <span v-html="content"></span>
+                <span v-html="content" v-highlight></span>
             </a-card>
         </div>
         <a-list v-if="comments.length"

@@ -14,7 +14,7 @@ Vue.directive('highlight',function (el) {
     blocks.forEach((block)=>{
         hljs.highlightBlock(block)
     })
-})
+});
 Vue.config.productionTip = false;
 
 Vue.use(Antd);

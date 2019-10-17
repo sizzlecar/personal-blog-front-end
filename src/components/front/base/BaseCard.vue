@@ -37,9 +37,15 @@
         beforeRouteEnter(to, from, next) {
             next(vm => {
                 // 通过 `vm` 访问组件实例
-                vm.imagePath = to.query.imagePath;
-                vm.title = to.query.title;
-                vm.description = to.query.description;
+                if(to.query.imagePath){
+                    vm.imagePath = to.query.imagePath;
+                }
+                if(to.query.title){
+                    vm.title = to.query.title;
+                }
+                if(to.query.description){
+                    vm.description = to.query.description;
+                }
             });
         },
         beforeRouteUpdate(to, from, next) {
