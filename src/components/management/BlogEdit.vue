@@ -1,7 +1,7 @@
 <template>
     <div>
         <a-card
-                :hoverable = "true"
+                :hoverable="true"
                 class="code-box"
                 title="编辑博客">
             <a-form
@@ -21,7 +21,7 @@
                 </a-form-item>
 
                 <a-form-item
-                        label="正文" >
+                        label="正文">
                     <mavon-editor
                             v-model="content"
                             :toolbars="toolbars"
@@ -30,7 +30,7 @@
 
                 </a-form-item>
 
-                <a-form-item >
+                <a-form-item>
                     <a-button
                             type="primary"
                             html-type="submit">
@@ -85,21 +85,26 @@
                     preview: true, // 预览
                     save: true // 保存（触发events中的save事件）
                 },
-                form : this.$form.createForm(this),
-                content: "今晚打老虎"
+                form: this.$form.createForm(this),
+                content: ""
             };
         },
 
         methods: {
 
-            handleSubmit  (e) {
+            handleSubmit(e) {
                 e.preventDefault();
                 this.form.validateFieldsAndScroll((err, values) => {
                     if (!err) {
                         values.content = this.content;
                         window.console.log('Received values of form: ', values);
                         addBlog(values).then(res => {
-                            window.console.log(res);
+                            if (res.status === 200 && res.data.code === "0") {
+                                this.$message.success('提交成功！');
+                                this.form.resetFields();
+                                this.content = "";
+                            }
+                            window.console.log(res.data.code === "0");
                         })
                     }
                 });
