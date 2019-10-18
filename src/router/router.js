@@ -4,6 +4,7 @@ import ArticleDetail from '../components/front/ArticleDetail';
 import BaseCard from '../components/front/base/BaseCard';
 import Management from '../components/management/Management';
 import BlogEdit from '../components/management/BlogEdit';
+import MenuManagement from '../components/management/MenuManagement';
 import {isLogin} from '../common/request';
 
 const routers = [
@@ -45,11 +46,15 @@ const routers = [
                 name: 'BlogEdit',
                 component: BlogEdit,
                 props: true
+            },{
+                path: '/management/blog/menu',
+                name: 'MenuManagement',
+                component: MenuManagement,
             }
         ],
         redirect: '/management/blog/add-blog',//如果直接访问 /blog 会重定向到 /blog/personal-profile
         beforeEnter: (to, from, next) => {
-            // ...
+            // '/management' 全局路由前置守卫，如果没有登陆则重定向至首页
             if(!isLogin()){
                 next({path: '/blog/personal-profile'});
             }

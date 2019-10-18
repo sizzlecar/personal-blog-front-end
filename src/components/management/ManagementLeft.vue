@@ -2,11 +2,11 @@
     <div>
         <a-menu mode="inline"
                 @click="click">
-            <a-menu-item key="1">
+            <a-menu-item key="add-blog">
                 <a-icon type="edit" />
                 <span>写博客</span>
             </a-menu-item>
-            <a-menu-item key="2">
+            <a-menu-item key="menu-management">
                 <a-icon type="setting" />
                 <span>菜单管理</span>
             </a-menu-item>
@@ -41,8 +41,10 @@
 
             click: function (e) {
                 window.console.log(e);
-                if(e.key == 1){
+                if(e.key === "add-blog"){
                     this.$router.push({path: '/management/blog/add-blog'});
+                }else if(e.key === "menu-management"){
+                    this.$router.push({path: '/management/blog/menu'});
                 }
             }
         },
