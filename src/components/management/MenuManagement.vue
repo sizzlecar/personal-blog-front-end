@@ -39,6 +39,17 @@
             </a-form>
 
         </a-modal>
+
+        <a-modal
+                title="确认"
+                :visible="deleteVisible"
+                @ok="deleteHandleOk"
+                @cancel="deleteHandleCancel"
+                cancelText="取消"
+                okText="确认"
+        >
+            <p>此项操作会删除该菜单以及该菜单下的所有子菜单，确认删除吗？</p>
+        </a-modal>
     </a-card>
 
 </template>
@@ -55,7 +66,10 @@
                 treeMenu: [],
                 visible: false,
                 modalTitle: "编辑名称",
-                form: this.$form.createForm(this, { name: 'coordinated' }),
+                form: this.$form.createForm(this),
+                currentNode: null,
+                currentOpType: 0,// 当前操作类型 0 添加  1 创建
+                deleteVisible: false
 
             };
         },
@@ -122,16 +136,23 @@
                 this.treeMenu = data;
             },
             addNode: function (e) {
-
-                this.form.setFieldsValue({node: e});
+                this.currentNode = e;
                 this.visible = true;
+                this.currentOpType = 0;
                 window.console.log(e);
             },
             updateNode: function (e) {
+                this.form.setFieldsValue({menuName: e.title});
+                this.visible = true;
+                this.currentOpType = 1;
+                this.currentNode = e;
                 window.console.log(e);
             },
             deleteNode: function (e) {
-                window.console.log(e)
+
+                this.currentNode = e;
+                this.deleteVisible = true;
+
             },
             handleCancel: function () {
                 this.visible = false;
@@ -142,23 +163,91 @@
                 e.preventDefault();
                 this.form.validateFields((err, values) => {
                     if (!err) {
+                        const loop = (data, key, callback) => {
+                            data.forEach((item, index, arr) => {
+                                if (item.key === key) {
+                                    return callback(item, index, arr);
+                                }
+                                if (item.children) {
+                                    return loop(item.children, key, callback);
+                                }
+                            });
+                        };
                         window.console.log('Received values of form: ', values);
-                        if(values.node){
-                            //非根节点
-                        }else {
-                            const res = {};
-                            res.key = new Date().getMilliseconds();
-                            res.title = values.menuName;
-                            res.level = 1;
-                            res.scopedSlots = { title: 'custom' };
-                            this.treeMenu.push(res);
+                        if(this.currentOpType === 0) {
+                            // 创建
+                            if(this.currentNode){
 
+                                loop(this.treeMenu,this.currentNode.key,(item, index, arr) => {
+                                    const children = item.children;
+                                    if(children && children[0]){
+                                        //当前节点有子节点
+                                        const res = {};
+                                        res.key = new Date().getMilliseconds();
+                                        res.title = values.menuName;
+                                        res.level = children[0].level;
+                                        res.scopedSlots = { title: 'custom' };
+                                        children.push(res);
+                                    }else {
+                                        //当前节点没有子节点
+                                        const children = [];
+                                        const res = {};
+                                        res.key = new Date().getMilliseconds();
+                                        res.title = values.menuName;
+                                        res.level = item.level + 1;
+                                        res.scopedSlots = { title: 'custom' };
+                                        children.push(res);
+                                        item.children = children;
+                                    }
+                                    arr.splice(index, 1, item);
+                                });
+
+
+                                window.console.log(values);
+
+                                //非根节点
+                            }else {
+                                const res = {};
+                                res.key = new Date().getMilliseconds();
+                                res.title = values.menuName;
+                                res.level = 1;
+                                res.scopedSlots = { title: 'custom' };
+                                this.treeMenu.push(res);
+
+                            }
+                        }else {
+                            // 修改名称
+                            loop(this.treeMenu, this.currentNode.key, (item, index, arr) => {
+                                item.title = values.menuName;
+                                arr.splice(index, 1, item);
+                            });
                         }
+
+
                         this.visible = false;
-                        //根节点
+                        this.form.resetFields();
                     }
                 });
             },
+            deleteHandleOk : function () {
+                const loop = (data, key, callback) => {
+                    data.forEach((item, index, arr) => {
+                        if (item.key === key) {
+                            return callback(item, index, arr);
+                        }
+                        if (item.children) {
+                            return loop(item.children, key, callback);
+                        }
+                    });
+                };
+                loop(this.treeMenu, this.currentNode.key, (item, index, arr) => {
+                    arr.splice(index, 1);
+                });
+                this.deleteVisible = false;
+            },
+            deleteHandleCancel: function () {
+                this.deleteVisible = false;
+            }
 
         },
         created: function () {

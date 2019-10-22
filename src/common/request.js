@@ -17,7 +17,12 @@ function clearToken() {
 }
 
 function isLogin() {
-    return !!axios.defaults.headers.common['Authorization'];
+    const token = window.localStorage.getItem("token");
+    if(token && !axios.defaults.headers.common['Authorization']){
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' +  token;
+    }
+    window.console.log(!!token);
+    return !!token;
 }
 
 /**
