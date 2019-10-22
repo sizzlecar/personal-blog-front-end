@@ -1,56 +1,62 @@
 <template>
     <a-card :title="title">
+        <span>添加根节点</span>&nbsp;&nbsp;<a-icon type="plus" @click="addNode()"/>
         <a-tree
                 class="draggable-tree"
                 :defaultExpandedKeys="expandedKeys"
                 draggable
                 @dragenter="onDragEnter"
                 @drop="onDrop"
-                :treeData="treeMenu"
-        />
+                :treeData="treeMenu">
+            <template slot="custom" slot-scope="item">
+                <span>{{item.title}}</span>
+                &nbsp;&nbsp;
+                <a-icon type="plus" @click="()=> addNode(item)" />
+                &nbsp;&nbsp;
+                <a-icon type="edit" @click="()=> updateNode(item)"/>
+                &nbsp;&nbsp;
+                <a-icon type="close" @click="(e)=> deleteNode(item)"/>
+            </template>
+        </a-tree>
+        <a-modal
+                :title="modalTitle"
+                :visible="visible"
+                @cancel="handleCancel"
+                :footer="null"
+        >
 
+            <a-form :form="form" @submit="handleSubmit">
+                <a-form-item label="菜单名称" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+                    <a-input
+                            v-decorator="['menuName', { rules: [{ required: true, message: '请输入菜单名称' },{ max: 20, message: '菜单名称长度不能超过20' }] }]"
+                    />
+                </a-form-item>
+                <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
+                    <a-button type="primary" html-type="submit">
+                        提交
+                    </a-button>
+                </a-form-item>
+            </a-form>
 
+        </a-modal>
     </a-card>
+
 </template>
 
 <script>
-    const x = 3;
-    const y = 2;
-    const z = 1;
-    const gData = [];
 
-    const generateData = (_level, _preKey, _tns) => {
-        const preKey = _preKey || '0';
-        const tns = _tns || gData;
-
-        const children = [];
-        for (let i = 0; i < x; i++) {
-            const key = `${preKey}-${i}`;
-            tns.push({ title: key, key });
-            if (i < y) {
-                children.push(key);
-            }
-        }
-        if (_level < 0) {
-            return tns;
-        }
-        const level = _level - 1;
-        children.forEach((key, index) => {
-            tns[index].children = [];
-            return generateData(level, key, tns[index].children);
-        });
-    };
-    generateData(z);
-    window.console.log(gData);
     import {managementMenuGetAllMenu} from '../../common/request';
     export default {
         name: "MenuManagement",
         data() {
             return {
                 title: '菜单管理',
-                gData,
                 expandedKeys: ['0-0', '0-0-0', '0-0-0-0'],
-                treeMenu: []
+                treeMenu: [],
+                visible: false,
+                modalTitle: "编辑名称",
+                form: this.$form.createForm(this, { name: 'coordinated' }),
+
             };
         },
         methods: {
@@ -115,6 +121,45 @@
                 }
                 this.treeMenu = data;
             },
+            addNode: function (e) {
+
+                this.form.setFieldsValue({node: e});
+                this.visible = true;
+                window.console.log(e);
+            },
+            updateNode: function (e) {
+                window.console.log(e);
+            },
+            deleteNode: function (e) {
+                window.console.log(e)
+            },
+            handleCancel: function () {
+                this.visible = false;
+                //重置表单值
+                this.form.resetFields();
+            },
+            handleSubmit(e) {
+                e.preventDefault();
+                this.form.validateFields((err, values) => {
+                    if (!err) {
+                        window.console.log('Received values of form: ', values);
+                        if(values.node){
+                            //非根节点
+                        }else {
+                            const res = {};
+                            res.key = new Date().getMilliseconds();
+                            res.title = values.menuName;
+                            res.level = 1;
+                            res.scopedSlots = { title: 'custom' };
+                            this.treeMenu.push(res);
+
+                        }
+                        this.visible = false;
+                        //根节点
+                    }
+                });
+            },
+
         },
         created: function () {
             managementMenuGetAllMenu().then(res => {
