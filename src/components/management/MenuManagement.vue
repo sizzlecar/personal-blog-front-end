@@ -56,7 +56,7 @@
 
 <script>
 
-    import {managementMenuGetAllMenu} from '../../common/request';
+    import {managementMenuGetAllMenu,addMenu, updateMenu} from '../../common/request';
     export default {
         name: "MenuManagement",
         data() {
@@ -108,7 +108,10 @@
                     loop(data, dropKey, item => {
                         item.children = item.children || [];
                         // where to insert 示例添加到尾部，可以是随意位置
+                        dragObj.level = item.level + 1;
+                        dragObj.parentId = item.key;
                         item.children.push(dragObj);
+
                     });
                 } else if (
                     (info.node.children || []).length > 0 && // Has children
@@ -116,16 +119,24 @@
                     dropPosition === 1 // On the bottom gap
                 ) {
                     loop(data, dropKey, item => {
+                        dragObj.level = item.level + 1;
+                        dragObj.parentId = item.key;
                         item.children = item.children || [];
                         // where to insert 示例添加到尾部，可以是随意位置
                         item.children.unshift(dragObj);
+
                     });
+                    window.console.log("(info.node.children || []).length > 0 && // Has children\n" +
+                        "                    info.node.expanded && // Is expanded\n" +
+                        "                    dropPosition === 1");
                 } else {
                     let ar;
                     let i;
                     loop(data, dropKey, (item, index, arr) => {
                         ar = arr;
                         i = index;
+                        dragObj.level = arr[0].level;
+                        dragObj.parentId = arr[0].parentId;
                     });
                     if (dropPosition === -1) {
                         ar.splice(i, 0, dragObj);
@@ -133,7 +144,23 @@
                         ar.splice(i + 1, 0, dragObj);
                     }
                 }
-                this.treeMenu = data;
+                const menu = {};
+                menu.id = dragObj.key;
+                menu.name = dragObj.title;
+                menu.level = dragObj.level;
+                menu.parentId = dragObj.parentId;
+                updateMenu(menu).then(res => {
+                    if(res.data.code === "0" && res.status === 200){
+                        this.$message.success('修改成功');
+                        managementMenuGetAllMenu().then(data => {
+                            //获取菜单数据
+                            window.console.log('重新获取list');
+                            window.console.log(data);
+                            this.treeMenu = data.data;
+                        });
+                    }
+                });
+                //this.treeMenu = data;
             },
             addNode: function (e) {
                 this.currentNode = e;
@@ -163,64 +190,96 @@
                 e.preventDefault();
                 this.form.validateFields((err, values) => {
                     if (!err) {
-                        const loop = (data, key, callback) => {
-                            data.forEach((item, index, arr) => {
-                                if (item.key === key) {
-                                    return callback(item, index, arr);
-                                }
-                                if (item.children) {
-                                    return loop(item.children, key, callback);
-                                }
-                            });
-                        };
+
                         window.console.log('Received values of form: ', values);
                         if(this.currentOpType === 0) {
                             // 创建
                             if(this.currentNode){
 
-                                loop(this.treeMenu,this.currentNode.key,(item, index, arr) => {
-                                    const children = item.children;
-                                    if(children && children[0]){
-                                        //当前节点有子节点
-                                        const res = {};
-                                        res.key = new Date().getMilliseconds();
-                                        res.title = values.menuName;
-                                        res.level = children[0].level;
-                                        res.scopedSlots = { title: 'custom' };
-                                        children.push(res);
-                                    }else {
-                                        //当前节点没有子节点
-                                        const children = [];
-                                        const res = {};
-                                        res.key = new Date().getMilliseconds();
-                                        res.title = values.menuName;
-                                        res.level = item.level + 1;
-                                        res.scopedSlots = { title: 'custom' };
-                                        children.push(res);
-                                        item.children = children;
+                                // loop(this.treeMenu,this.currentNode.key,(item, index, arr) => {
+                                //     const children = item.children;
+                                //     if(children && children[0]){
+                                //         //当前节点有子节点
+                                //         const res = {};
+                                //         res.key = new Date().getMilliseconds();
+                                //         res.title = values.menuName;
+                                //         res.level = children[0].level;
+                                //         res.scopedSlots = { title: 'custom' };
+                                //         children.push(res);
+                                //     }else {
+                                //         //当前节点没有子节点
+                                //         const children = [];
+                                //         const res = {};
+                                //         res.key = new Date().getMilliseconds();
+                                //         res.title = values.menuName;
+                                //         res.level = item.level + 1;
+                                //         res.scopedSlots = { title: 'custom' };
+                                //         children.push(res);
+                                //         item.children = children;
+                                //     }
+                                //     arr.splice(index, 1, item);
+                                // });
+                                //
+                                //
+                                // window.console.log(values);
+                                const menu = {};
+                                menu.name = values.menuName;
+                                menu.parentId = this.currentNode.key;
+                                menu.level = this.currentNode.level + 1;
+                                addMenu(menu).then(res => {
+                                    window.console.log(res);
+                                    if(res.status === 200 && res.data.code === "0"){
+                                        this.$message.success("添加成功");
+                                        managementMenuGetAllMenu().then(data => {
+                                            //获取菜单数据
+                                            this.treeMenu = data.data;
+                                        });
                                     }
-                                    arr.splice(index, 1, item);
                                 });
-
-
-                                window.console.log(values);
 
                                 //非根节点
                             }else {
-                                const res = {};
-                                res.key = new Date().getMilliseconds();
-                                res.title = values.menuName;
-                                res.level = 1;
-                                res.scopedSlots = { title: 'custom' };
-                                this.treeMenu.push(res);
+                                // const res = {};
+                                // res.key = new Date().getMilliseconds();
+                                // res.title = values.menuName;
+                                // res.level = 1;
+                                // res.scopedSlots = { title: 'custom' };
+                                // this.treeMenu.push(res);
+                                const menu = {};
+                                menu.name = values.menuName;
+                                menu.parentId = 0;
+                                menu.level = 0;
+                                addMenu(menu).then(res => {
+                                    if(res.status === 200 && res.data.code === "0"){
+                                        this.$message.success("添加成功");
+                                        managementMenuGetAllMenu().then(data => {
+                                            //获取菜单数据
+                                            this.treeMenu = data.data;
+                                        });
+                                    }
 
+                                });
                             }
                         }else {
                             // 修改名称
-                            loop(this.treeMenu, this.currentNode.key, (item, index, arr) => {
-                                item.title = values.menuName;
-                                arr.splice(index, 1, item);
-                            });
+                            // loop(this.treeMenu, this.currentNode.key, (item, index, arr) => {
+                            //     item.title = values.menuName;
+                            //     arr.splice(index, 1, item);
+                            // });
+                            const menu = {};
+                            menu.name = values.menuName;
+                            menu.parentId = this.currentNode.parentId;
+                            menu.level = this.currentNode.level;
+                            menu.id = this.currentNode.key;
+                            updateMenu(menu).then(res => {
+                                if(res.status === 200 && res.data.code === "0"){
+                                    this.$message.success("修改成功");
+                                    managementMenuGetAllMenu().then(data => {
+                                        //获取菜单数据
+                                        this.treeMenu = data.data;
+                                    });
+                                }
+                            })
                         }
 
 

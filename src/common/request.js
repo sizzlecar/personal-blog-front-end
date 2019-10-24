@@ -66,7 +66,18 @@ function managementMenuGetAllMenu() {
     return axios.post('/blog/management/blog-menu/list');
 }
 
+function updateMenu(menu) {
+    return axios.post('/blog/management/blog-menu/update', menu);
+}
+
+function addMenu(menu) {
+    return axios.post('/blog/management/blog-menu/add', menu);
+}
 
 
 
-export{getMenu, getBlogList, getBlogDetail, login, setToken, clearToken, isLogin, addBlog, managementMenuGetAllMenu}
+
+
+
+export{getMenu, getBlogList, getBlogDetail, login, setToken, clearToken, isLogin, addBlog,
+    managementMenuGetAllMenu, updateMenu, addMenu}
