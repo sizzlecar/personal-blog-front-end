@@ -1,6 +1,6 @@
 <template>
 
-    <div :class="scrollTop > 64 ? sider : ''">
+    <!--<div :class="scrollTop > 64 ? sider : ''">
         <a-menu mode="inline"
                 @click="click">
             <a-menu-item v-for="item in getMenuItems(this.menu, 0)"
@@ -35,7 +35,14 @@
             </a-sub-menu>
         </a-menu>
         <a-back-top />
+    </div>-->
+    <div :class="scrollTop > 64 ? sider : ''">
+        <a-tree
+                @select="select"
+                :treeData="menu">
+        </a-tree>
     </div>
+
 
 </template>
 
@@ -59,29 +66,12 @@
         },
         methods: {
 
-            click: function (e) {
-                this.$router.push({path: this.rootPath + `${e.key}`});
+            select: function (key, e) {
+                if(e.selected) {
+                    this.$router.push({path: this.rootPath + `${key}`});
+                }
             },
-            getMenuItems: function (menuArray, level) {
-                const menuItems = [];
-                menuArray.forEach(item =>{
-                    if(item.child.length === 0 && item.level === level){
-                        //没有子类的的第一级菜单
-                        menuItems.push(item);
-                    }
-                });
-                return menuItems;
-            },
-            getSubMenuItems: function (menuArray, level) {
-                const subMenuItems = [];
-                menuArray.forEach(item =>{
-                    if(item.child.length !== 0 && item.level === level){
-                        //有子菜单的第一级菜单
-                        subMenuItems.push(item);
-                    }
-                });
-                return subMenuItems;
-            },
+
             handleScroll() {
                 this.scrollTop =
                     window.pageYOffset ||

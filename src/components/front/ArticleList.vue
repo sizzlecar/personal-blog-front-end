@@ -1,13 +1,25 @@
 <template>
     <div class="main-container">
-        <a-card v-for="(article, index) in articles"
+       <!-- <a-card v-for="(article, index) in articles"
                 :key="index"
                 :hoverable = "true"
                 class="code-box"
                 :title="article.blogTitle">
             <span slot="extra" @click="jumpBlogDetail(article.id)">继续阅读</span>
             <p>{{article.blogDesc}}</p>
-        </a-card>
+        </a-card>-->
+
+        <a-list itemLayout="vertical" size="large" :pagination="pagination" :dataSource="articles" :locale="noData">
+            <a-list-item slot="renderItem" slot-scope="item" key="item.id">
+                    <span  >
+                      {{item.blogTitle}}
+                    </span>
+                <a-list-item-meta :description="item.blogDesc">
+                    <a slot="blogTitle" @click="jumpBlogDetail(item.id)">继续阅读</a>
+                </a-list-item-meta>
+                {{item.content}}
+            </a-list-item>
+        </a-list>
     </div>
 </template>
 
@@ -25,7 +37,21 @@
         },
         data() {
             return {
-                articles: []
+                articles: [],
+                pagination: {
+                    onChange: page => {
+                        window.console.log(page);
+                    },
+                    pageSize: 3,
+                },
+                actions: [
+                    { type: 'star-o', text: '156' },
+                    { type: 'like-o', text: '156' },
+                    { type: 'message', text: '2' },
+                ],
+                noData: {
+                   emptyText:  "暂无数据"
+                }
             };
         },
         methods: {
