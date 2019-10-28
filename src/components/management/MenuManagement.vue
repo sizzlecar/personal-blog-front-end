@@ -56,7 +56,7 @@
 
 <script>
 
-    import {managementMenuGetAllMenu,addMenu, updateMenu} from '../../common/request';
+    import {managementMenuGetAllMenu,addMenu, updateMenu, deleteMenu} from '../../common/request';
     export default {
         name: "MenuManagement",
         data() {
@@ -158,6 +158,8 @@
                             window.console.log(data);
                             this.treeMenu = data.data;
                         });
+                    }else {
+                        this.$message.error(res.data.msg || '系统发生错误，请稍微重试');
                     }
                 });
                 //this.treeMenu = data;
@@ -234,6 +236,8 @@
                                             //获取菜单数据
                                             this.treeMenu = data.data;
                                         });
+                                    }else {
+                                        this.$message.error(res.data.msg || '系统发生错误，请稍微重试');
                                     }
                                 });
 
@@ -256,6 +260,8 @@
                                             //获取菜单数据
                                             this.treeMenu = data.data;
                                         });
+                                    }else {
+                                        this.$message.error(res.data.msg || '系统发生错误，请稍微重试');
                                     }
 
                                 });
@@ -278,6 +284,8 @@
                                         //获取菜单数据
                                         this.treeMenu = data.data;
                                     });
+                                }else {
+                                    this.$message.error(res.data.msg || '系统发生错误，请稍微重试');
                                 }
                             })
                         }
@@ -289,7 +297,7 @@
                 });
             },
             deleteHandleOk : function () {
-                const loop = (data, key, callback) => {
+                /*const loop = (data, key, callback) => {
                     data.forEach((item, index, arr) => {
                         if (item.key === key) {
                             return callback(item, index, arr);
@@ -301,6 +309,19 @@
                 };
                 loop(this.treeMenu, this.currentNode.key, (item, index, arr) => {
                     arr.splice(index, 1);
+                });*/
+                const para = {};
+                para.id = this.currentNode.key;
+                deleteMenu(para).then(res => {
+                    if(res.status === 200 && res.data.code === '0') {
+                        this.$message.success('删除成功！');
+                        managementMenuGetAllMenu().then(res => {
+                            //获取菜单数据
+                            this.treeMenu = res.data;
+                        });
+                    }else {
+                        this.$message.error(res.data.msg || '删除错误');
+                    }
                 });
                 this.deleteVisible = false;
             },
