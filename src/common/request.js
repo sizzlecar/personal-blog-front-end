@@ -3,7 +3,6 @@ import axios from 'axios';
 axios.defaults.baseURL = '/';
 
 
-
 function setToken() {
     const token = window.localStorage.getItem("token");
     if(token){

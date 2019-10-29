@@ -8,7 +8,7 @@
                 @dragenter="onDragEnter"
                 @drop="onDrop"
                 :treeData="treeMenu">
-            <template slot="custom" slot-scope="item">
+            <template slot="operationSlot" slot-scope="item">
                 <span>{{item.title}}</span>
                 &nbsp;&nbsp;
                 <a-icon type="plus" @click="()=> addNode(item)" />
@@ -17,6 +17,7 @@
                 &nbsp;&nbsp;
                 <a-icon type="close" @click="(e)=> deleteNode(item)"/>
             </template>
+            <a-icon type="smile" theme="twoTone" slot="iconSlot" />
         </a-tree>
         <a-modal
                 :title="modalTitle"

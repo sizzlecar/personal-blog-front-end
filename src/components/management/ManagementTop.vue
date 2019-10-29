@@ -31,7 +31,6 @@
         },
         methods: {
             goPersonProfile: function () {
-                window.console.log('点击了goPersonProfile');
                 let params = {
                     imagePath: require("../../assets/weixin.jpg"),
                     title: "我是小说大魔王关致之",
