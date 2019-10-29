@@ -11,14 +11,13 @@
 
         <a-list itemLayout="vertical" size="large" :pagination="pagination" :dataSource="articles" :locale="noData">
             <a-list-item slot="renderItem" slot-scope="item" key="item.id">
-                    <span  >
-                      {{item.blogTitle}}
-                    </span>
                 <a-list-item-meta :description="item.blogDesc">
-                    <a slot="blogTitle" @click="jumpBlogDetail(item.id)">继续阅读</a>
+                    <template slot="title">
+                        <span>{{item.title}}</span>
+                        <a-icon type="edit" @click="()=> jumpBlogDetail(item.id)"/>
+                    </template>
                 </a-list-item-meta>
-                {{item.content}}
-            </a-list-item>
+            </a-list-item>>
         </a-list>
     </div>
 </template>

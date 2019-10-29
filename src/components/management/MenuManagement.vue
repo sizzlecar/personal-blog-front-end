@@ -17,7 +17,6 @@
                 &nbsp;&nbsp;
                 <a-icon type="close" @click="(e)=> deleteNode(item)"/>
             </template>
-            <a-icon type="smile" theme="twoTone" slot="iconSlot" />
         </a-tree>
         <a-modal
                 :title="modalTitle"
