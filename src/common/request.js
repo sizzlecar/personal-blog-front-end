@@ -35,8 +35,8 @@ function getMenu(){
 /**
  * 获取某一菜单下的博客
  */
-function getBlogList(menuId){
-    return axios.get("/blog/list/" + menuId);
+function getBlogList(blog){
+    return axios.post("/blog/list", blog);
 }
 
 

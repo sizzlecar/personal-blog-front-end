@@ -1,20 +1,15 @@
 <template>
     <div class="main-container">
-       <!-- <a-card v-for="(article, index) in articles"
-                :key="index"
-                :hoverable = "true"
-                class="code-box"
-                :title="article.blogTitle">
-            <span slot="extra" @click="jumpBlogDetail(article.id)">继续阅读</span>
-            <p>{{article.blogDesc}}</p>
-        </a-card>-->
-
-        <a-list itemLayout="vertical" size="large" :pagination="pagination" :dataSource="articles" :locale="noData">
+        <a-list
+                itemLayout="vertical"
+                size="large"
+                :pagination="pagination"
+                :dataSource="articles"
+                :locale="noData">
             <a-list-item slot="renderItem" slot-scope="item" key="item.id">
                 <a-list-item-meta :description="item.blogDesc">
                     <template slot="title">
-                        <span>{{item.title}}</span>
-                        <a-icon type="edit" @click="()=> jumpBlogDetail(item.id)"/>
+                        <div @click="()=> jumpBlogDetail(item.id)">{{item.title}}</div>
                     </template>
                 </a-list-item-meta>
             </a-list-item>>
@@ -38,16 +33,13 @@
             return {
                 articles: [],
                 pagination: {
-                    onChange: page => {
-                        window.console.log(page);
+                    onChange: (pageNo, pageSize) => {
+                        this.getBlogList(this.menuId, pageNo, pageSize);
                     },
-                    pageSize: 3,
+                    pageSize: 5,
+                    total: 0,
+                    showTotal: total => `共 ${total} 条数据`
                 },
-                actions: [
-                    { type: 'star-o', text: '156' },
-                    { type: 'like-o', text: '156' },
-                    { type: 'message', text: '2' },
-                ],
                 noData: {
                    emptyText:  "暂无数据"
                 }
@@ -55,11 +47,16 @@
         },
         methods: {
             // 获取blog list
-            getBlogList: function (menuId) {
-                getBlogList(menuId).then(result => {
-                    this.articles = result.data;
+            getBlogList: function (menuId,pageNo = 1, pageSize = 10) {
+                const blog = {};
+                blog.menuId = menuId;
+                blog.pageNo = (pageNo - 1) * pageSize;
+                blog.pageSize = pageSize;
+                getBlogList(blog).then(result => {
+                    this.articles = result.data.list;
+                    this.pagination.total = result.data.total;
+                    window.console.log(this.pagination);
                 });
-
             },
             //获取文章详情
             jumpBlogDetail: function (blogId) {
