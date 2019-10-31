@@ -55,7 +55,6 @@
                 getBlogList(blog).then(result => {
                     this.articles = result.data.list;
                     this.pagination.total = result.data.total;
-                    window.console.log(this.pagination);
                 });
             },
             //获取文章详情

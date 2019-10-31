@@ -21,6 +21,20 @@
                 </a-form-item>
 
                 <a-form-item
+                        label="菜单">
+                    <a-tree-select
+                            showSearch
+                            placeholder="请选择菜单"
+                            allowClear
+                            treeDefaultExpandAll
+                            :treeData="treeData"
+                            v-decorator="['menuId',{rules: [{required: true, message: '请选择菜单',}]}]"
+                            @change="onChange"
+                    >
+                    </a-tree-select>
+                </a-form-item>
+
+                <a-form-item
                         label="正文">
                     <mavon-editor
                             v-model="content"
@@ -44,7 +58,7 @@
 </template>
 
 <script>
-    import {addBlog} from '../../common/request';
+    import {addBlog, getMenu} from '../../common/request';
 
     export default {
         name: "BlogEdit",
@@ -86,7 +100,9 @@
                     save: true // 保存（触发events中的save事件）
                 },
                 form: this.$form.createForm(this),
-                content: ""
+                content: "",
+                treeData: [],
+                value: null
             };
         },
 
@@ -109,7 +125,19 @@
                     }
                 });
             },
-        }
+            onChange: function (value) {
+                this.value = value;
+                window.console.log("select menu" + value);
+            }
+        },
+        created: function () {
+            getMenu().then(res => {
+                //获取菜单数据
+                this.treeMenu = res.data;
+                window.console.log(this.treeMenu);
+            });
+        },
+
     }
 </script>
 

@@ -126,9 +126,6 @@
                         item.children.unshift(dragObj);
 
                     });
-                    window.console.log("(info.node.children || []).length > 0 && // Has children\n" +
-                        "                    info.node.expanded && // Is expanded\n" +
-                        "                    dropPosition === 1");
                 } else {
                     let ar;
                     let i;
@@ -198,32 +195,6 @@
                             // 创建
                             if(this.currentNode){
 
-                                // loop(this.treeMenu,this.currentNode.key,(item, index, arr) => {
-                                //     const children = item.children;
-                                //     if(children && children[0]){
-                                //         //当前节点有子节点
-                                //         const res = {};
-                                //         res.key = new Date().getMilliseconds();
-                                //         res.title = values.menuName;
-                                //         res.level = children[0].level;
-                                //         res.scopedSlots = { title: 'custom' };
-                                //         children.push(res);
-                                //     }else {
-                                //         //当前节点没有子节点
-                                //         const children = [];
-                                //         const res = {};
-                                //         res.key = new Date().getMilliseconds();
-                                //         res.title = values.menuName;
-                                //         res.level = item.level + 1;
-                                //         res.scopedSlots = { title: 'custom' };
-                                //         children.push(res);
-                                //         item.children = children;
-                                //     }
-                                //     arr.splice(index, 1, item);
-                                // });
-                                //
-                                //
-                                // window.console.log(values);
                                 const menu = {};
                                 menu.name = values.menuName;
                                 menu.parentId = this.currentNode.key;
@@ -243,12 +214,7 @@
 
                                 //非根节点
                             }else {
-                                // const res = {};
-                                // res.key = new Date().getMilliseconds();
-                                // res.title = values.menuName;
-                                // res.level = 1;
-                                // res.scopedSlots = { title: 'custom' };
-                                // this.treeMenu.push(res);
+
                                 const menu = {};
                                 menu.name = values.menuName;
                                 menu.parentId = 0;
@@ -267,11 +233,6 @@
                                 });
                             }
                         }else {
-                            // 修改名称
-                            // loop(this.treeMenu, this.currentNode.key, (item, index, arr) => {
-                            //     item.title = values.menuName;
-                            //     arr.splice(index, 1, item);
-                            // });
                             const menu = {};
                             menu.name = values.menuName;
                             menu.parentId = this.currentNode.parentId;
@@ -297,19 +258,6 @@
                 });
             },
             deleteHandleOk : function () {
-                /*const loop = (data, key, callback) => {
-                    data.forEach((item, index, arr) => {
-                        if (item.key === key) {
-                            return callback(item, index, arr);
-                        }
-                        if (item.children) {
-                            return loop(item.children, key, callback);
-                        }
-                    });
-                };
-                loop(this.treeMenu, this.currentNode.key, (item, index, arr) => {
-                    arr.splice(index, 1);
-                });*/
                 const para = {};
                 para.id = this.currentNode.key;
                 deleteMenu(para).then(res => {

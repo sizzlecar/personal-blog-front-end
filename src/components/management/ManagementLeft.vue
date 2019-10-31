@@ -40,7 +40,6 @@
         methods: {
 
             click: function (e) {
-                window.console.log(e);
                 if(e.key === "add-blog"){
                     this.$router.push({path: '/management/blog/add-blog'});
                 }else if(e.key === "menu-management"){

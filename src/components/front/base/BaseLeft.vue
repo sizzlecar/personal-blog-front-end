@@ -1,41 +1,5 @@
 <template>
 
-    <!--<div :class="scrollTop > 64 ? sider : ''">
-        <a-menu mode="inline"
-                @click="click">
-            <a-menu-item v-for="item in getMenuItems(this.menu, 0)"
-                         :index="item.id.toString()"
-                         :key="item.id"
-                         :disabled="!item.active">{{item.name}}
-
-            </a-menu-item>
-            <a-sub-menu v-for="item in getSubMenuItems(this.menu, 0)"
-                        :index="item.id.toString()"
-                        :key="item.id"
-                        :disabled="!item.active">
-                <template slot="title">{{item.name}}</template>
-                <a-menu-item v-for="subItem in getMenuItems(item.child, item.level + 1)"
-                              :index="subItem.id.toString()"
-                              :key="subItem.id"
-                              :disabled="!subItem.active">
-                    {{subItem.name}}
-                </a-menu-item>
-                <a-sub-menu v-for="subItem in getSubMenuItems(item.child, item.level + 1)"
-                            :index="subItem.id.toString()"
-                            :key="subItem.id"
-                            :disabled="!subItem.active">
-                    <template slot="title">{{subItem.name}}</template>
-                    <a-menu-item v-for="subSubItem in getMenuItems(subItem.child, subItem.level + 1)"
-                                  :index="subSubItem.id.toString()"
-                                  :key="subSubItem.id"
-                                  :disabled="!subSubItem.active">
-                        {{subSubItem.name}}
-                    </a-menu-item>
-                </a-sub-menu>
-            </a-sub-menu>
-        </a-menu>
-        <a-back-top />
-    </div>-->
     <div :class="scrollTop > 64 ? sider : ''">
         <a-tree
                 @select="select"
