@@ -134,7 +134,7 @@
                 const result = [];
                 for (const menu of allMenu) {
                     const res = {};
-                    res.value = menu.id;
+                    res.value = String(menu.id);
                     res.label = menu.name;
                     res.parentId = 0;
                     if (menu.children) {
