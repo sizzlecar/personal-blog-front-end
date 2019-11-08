@@ -3,7 +3,6 @@
         <span>添加根节点</span>&nbsp;&nbsp;<a-icon type="plus" @click="addNode()"/>
         <a-tree
                 class="draggable-tree"
-                :defaultExpandedKeys="expandedKeys"
                 draggable
                 @dragenter="onDragEnter"
                 @drop="onDrop"
@@ -15,7 +14,7 @@
                 &nbsp;&nbsp;
                 <a-icon type="edit" @click="()=> updateNode(item)"/>
                 &nbsp;&nbsp;
-                <a-icon type="close" @click="(e)=> deleteNode(item)"/>
+                <a-icon type="close" @click="()=> deleteNode(item)"/>
             </template>
         </a-tree>
         <a-modal
@@ -62,7 +61,6 @@
         data() {
             return {
                 title: '菜单管理',
-                expandedKeys: ['0-0', '0-0-0', '0-0-0-0'],
                 treeMenu: [],
                 visible: false,
                 modalTitle: "编辑名称",
@@ -149,12 +147,7 @@
                 updateMenu(menu).then(res => {
                     if(res.data.code === "0" && res.status === 200){
                         this.$message.success('修改成功');
-                        managementMenuGetAllMenu().then(data => {
-                            //获取菜单数据
-                            window.console.log('重新获取list');
-                            window.console.log(data);
-                            this.treeMenu = data.data;
-                        });
+                        this.getMenuList();
                     }else {
                         this.$message.error(res.data.msg || '系统发生错误，请稍微重试');
                     }
@@ -189,7 +182,6 @@
                 e.preventDefault();
                 this.form.validateFields((err, values) => {
                     if (!err) {
-
                         window.console.log('Received values of form: ', values);
                         if(this.currentOpType === 0) {
                             // 创建
@@ -203,10 +195,7 @@
                                     window.console.log(res);
                                     if(res.status === 200 && res.data.code === "0"){
                                         this.$message.success("添加成功");
-                                        managementMenuGetAllMenu().then(data => {
-                                            //获取菜单数据
-                                            this.treeMenu = data.data;
-                                        });
+                                        this.getMenuList();
                                     }else {
                                         this.$message.error(res.data.msg || '系统发生错误，请稍微重试');
                                     }
@@ -222,10 +211,7 @@
                                 addMenu(menu).then(res => {
                                     if(res.status === 200 && res.data.code === "0"){
                                         this.$message.success("添加成功");
-                                        managementMenuGetAllMenu().then(data => {
-                                            //获取菜单数据
-                                            this.treeMenu = data.data;
-                                        });
+                                        this.getMenuList();
                                     }else {
                                         this.$message.error(res.data.msg || '系统发生错误，请稍微重试');
                                     }
@@ -241,10 +227,7 @@
                             updateMenu(menu).then(res => {
                                 if(res.status === 200 && res.data.code === "0"){
                                     this.$message.success("修改成功");
-                                    managementMenuGetAllMenu().then(data => {
-                                        //获取菜单数据
-                                        this.treeMenu = data.data;
-                                    });
+                                    this.getMenuList();
                                 }else {
                                     this.$message.error(res.data.msg || '系统发生错误，请稍微重试');
                                 }
@@ -263,10 +246,7 @@
                 deleteMenu(para).then(res => {
                     if(res.status === 200 && res.data.code === '0') {
                         this.$message.success('删除成功！');
-                        managementMenuGetAllMenu().then(res => {
-                            //获取菜单数据
-                            this.treeMenu = res.data;
-                        });
+                        this.getMenuList();
                     }else {
                         this.$message.error(res.data.msg || '删除错误');
                     }
@@ -275,15 +255,42 @@
             },
             deleteHandleCancel: function () {
                 this.deleteVisible = false;
+            },
+
+            getMenuList: function(){
+
+                managementMenuGetAllMenu().then(res => {
+                    //获取菜单数据
+                    this.treeMenu = this.transField(res.data);
+                });
+
+            },
+            transField(allMenu) {
+                const result = [];
+                for (const menu of allMenu) {
+                    const res = {};
+                    res.key = menu.id;
+                    res.title = menu.name;
+                    res.level = menu.level;
+                    res.scopedSlots = {
+                        title: 'operationSlot',
+                    };
+                    res.parentId = 0;
+                    if (menu.children) {
+                        res.children = this.transField(menu.children);
+                        for (const children of res.children) {
+                            children.parentId = res.key;
+                        }
+
+                    }
+                    result.push(res);
+                }
+                return result;
             }
 
         },
         created: function () {
-            managementMenuGetAllMenu().then(res => {
-                //获取菜单数据
-                this.treeMenu = res.data;
-                window.console.log(this.treeMenu);
-            });
+            this.getMenuList();
         },
     }
 </script>

@@ -41,13 +41,36 @@
                     window.pageYOffset ||
                     document.documentElement.scrollTop ||
                     document.body.scrollTop;
+            },
+
+            transField(allMenu) {
+                const result = [];
+                for (const menu of allMenu) {
+                    const res = {};
+                    res.key = menu.id;
+                    res.title = menu.name;
+                    res.level = menu.level;
+                    res.scopedSlots = {
+                        title: 'operationSlot',
+                    };
+                    res.parentId = 0;
+                    if (menu.children) {
+                        res.children = this.transField(menu.children);
+                        for (const children of res.children) {
+                            children.parentId = res.key;
+                        }
+
+                    }
+                    result.push(res);
+                }
+                return result;
             }
 
         },
         created: function () {
             getMenu().then(res => {
                 //获取菜单数据
-                this.menu = res.data;
+                this.menu = this.transField(res.data);
             });
         },
 

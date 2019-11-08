@@ -28,7 +28,7 @@
                             allowClear
                             treeDefaultExpandAll
                             :treeData="treeData"
-                            v-decorator="['menuId',{rules: [{required: true, message: '请选择菜单',}]}]"
+                            v-decorator="['menuId', {rules: [{required: true, message: '请选择菜单',}]}]"
                             @change="onChange"
                     >
                     </a-tree-select>
@@ -37,6 +37,7 @@
                 <a-form-item
                         label="正文">
                     <mavon-editor
+                            class="z-index-class"
                             v-model="content"
                             :toolbars="toolbars"
                             :scrollStyle="true">
@@ -102,7 +103,7 @@
                 form: this.$form.createForm(this),
                 content: "",
                 treeData: [],
-                value: null
+                value: null,
             };
         },
 
@@ -119,22 +120,40 @@
                                 this.$message.success('提交成功！');
                                 this.form.resetFields();
                                 this.content = "";
+                            }else {
+                                this.$message.error(res.data.msg | '发生错误，请稍后重试');
                             }
-                            window.console.log(res.data.code === "0");
                         })
                     }
                 });
             },
             onChange: function (value) {
-                this.value = value;
                 window.console.log("select menu" + value);
+            },
+            transField(allMenu) {
+                const result = [];
+                for (const menu of allMenu) {
+                    const res = {};
+                    res.value = menu.id;
+                    res.label = menu.name;
+                    res.parentId = 0;
+                    if (menu.children) {
+                        res.children = this.transField(menu.children);
+                        for (const children of res.children) {
+                            children.parentId = res.value;
+                        }
+
+                    }
+                    result.push(res);
+                }
+                return result;
             }
         },
         created: function () {
             getMenu().then(res => {
                 //获取菜单数据
-                this.treeMenu = res.data;
-                window.console.log(this.treeMenu);
+                this.treeData = this.transField(res.data);
+                window.console.log(this.treeData);
             });
         },
 
@@ -142,5 +161,7 @@
 </script>
 
 <style scoped>
-
+    .z-index-class{
+        z-index: 1000!important;;
+    }
 </style>
