@@ -9,7 +9,7 @@
                 :dataSource="comments"
                 :header="`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`"
                 itemLayout="horizontal">
-            <a-list-item slot="renderItem" slot-scope="item, index">
+            <a-list-item slot="renderItem" slot-scope="item">
                 <a-comment
                         :author="item.author"
                         :avatar="item.avatar"

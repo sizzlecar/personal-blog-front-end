@@ -12,7 +12,7 @@
                         <div @click="()=> jumpBlogDetail(item.id)">{{item.title}}</div>
                     </template>
                 </a-list-item-meta>
-            </a-list-item>>
+            </a-list-item>
         </a-list>
     </div>
 </template>
