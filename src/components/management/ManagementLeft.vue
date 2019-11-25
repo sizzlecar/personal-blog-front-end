@@ -10,7 +10,7 @@
                 <a-icon type="setting" />
                 <span>菜单管理</span>
             </a-menu-item>
-            <a-menu-item key="3">
+            <a-menu-item key="blog-management">
                 <a-icon type="form" />
                 <span>博客管理</span>
             </a-menu-item>
@@ -44,6 +44,8 @@
                     this.$router.push({path: '/management/blog/add-blog'});
                 }else if(e.key === "menu-management"){
                     this.$router.push({path: '/management/blog/menu'});
+                }else if(e.key === "blog-management"){
+                    this.$router.push({path: '/management/blog'});
                 }
             }
         },

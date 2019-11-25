@@ -7,7 +7,7 @@ import { Button, Card, Dropdown, Form, Icon,
     Layout, List, Select, Row,
     Tree, TreeSelect, Col, Input,
     Menu, Modal, Checkbox, Comment,
-    BackTop, message} from 'ant-design-vue';
+    BackTop, Table, message} from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.less'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
@@ -23,6 +23,7 @@ Vue.directive('highlight',function (el) {
 Vue.config.productionTip = false;
 
 Vue.prototype.$message = message;
+Vue.use(Table);
 Vue.use(BackTop);
 Vue.use(Comment);
 Vue.use(Menu);

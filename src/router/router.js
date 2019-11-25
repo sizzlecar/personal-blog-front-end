@@ -5,6 +5,7 @@ import BaseCard from '../components/front/base/BaseCard';
 import Management from '../components/management/Management';
 import BlogEdit from '../components/management/BlogEdit';
 import MenuManagement from '../components/management/MenuManagement';
+import BlogManagement from '../components/management/BlogManagement';
 import {isLogin} from '../common/request';
 
 const routers = [
@@ -50,6 +51,10 @@ const routers = [
                 path: '/management/blog/menu',
                 name: 'MenuManagement',
                 component: MenuManagement,
+            },{
+                path: '/management/blog',
+                name: 'BlogManagement',
+                component: BlogManagement,
             }
         ],
         redirect: '/management/blog/add-blog',//如果直接访问 /blog 会重定向到 /blog/personal-profile
