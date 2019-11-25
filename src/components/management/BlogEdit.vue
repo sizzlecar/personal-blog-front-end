@@ -153,7 +153,6 @@
             getMenu().then(res => {
                 //获取菜单数据
                 this.treeData = this.transField(res.data);
-                window.console.log(this.treeData);
             });
         },
 

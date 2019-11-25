@@ -1,7 +1,14 @@
 import axios from 'axios';
+import {getCookie} from './utils'
 
 axios.defaults.baseURL = '/';
 
+function setCsrfToken() {
+    const csrfToken = getCookie('csrfToken');
+    if(csrfToken) {
+        axios.defaults.headers.common['x-csrf-token'] = csrfToken;
+    }
+}
 
 function setToken() {
     const token = window.localStorage.getItem("token");
@@ -83,4 +90,4 @@ function deleteMenu(menu) {
 
 
 export{getMenu, getBlogList, getBlogDetail, login, setToken, clearToken, isLogin, addBlog,
-    managementMenuGetAllMenu, updateMenu, addMenu, deleteMenu}
+    managementMenuGetAllMenu, updateMenu, addMenu, deleteMenu, setCsrfToken}
