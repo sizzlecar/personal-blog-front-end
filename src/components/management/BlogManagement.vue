@@ -60,6 +60,7 @@
             tags: ['cool', 'teacher'],
         },
     ];
+    import {getBlogList} from '../../common/request';
     export default {
         name: "BlogManagement",
         data() {

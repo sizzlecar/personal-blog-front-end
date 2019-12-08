@@ -83,10 +83,14 @@ function deleteMenu(menu) {
     return axios.post('/blog/management/blog-menu/delete', menu);
 }
 
+function managementGetBlogList(blog) {
+    return axios.post('/blog/management/blog/list', blog);
+}
+
 
 
 
 
 
 export{getMenu, getBlogList, getBlogDetail, login, setToken, clearToken, isLogin, addBlog,
-    managementMenuGetAllMenu, updateMenu, addMenu, deleteMenu, setCsrfToken}
+    managementMenuGetAllMenu, updateMenu, addMenu, deleteMenu, setCsrfToken, managementGetBlogList}
