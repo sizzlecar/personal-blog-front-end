@@ -1,74 +1,60 @@
 <template>
-    <a-table :columns="columns" :dataSource="data">
-        <a slot="name" slot-scope="text" href="javascript:;">{{text}}</a>
-        <span slot="customTitle"><a-icon type="smile-o" /> Name</span>
-
+    <a-table
+            :columns="columns"
+            :dataSource="blog">
+        <span slot="customTitle"><a-icon type="smile-o"/> Id</span>
     </a-table>
 </template>
 
 <script>
     const columns = [
         {
-            dataIndex: 'name',
-            key: 'name',
-            slots: { title: 'customTitle' },
-            scopedSlots: { customRender: 'name' },
+            dataIndex: 'id',
+            slots: {title: 'customTitle'},
+            scopedSlots: {customRender: 'id'},
         },
         {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
+            title: '标题',
+            dataIndex: 'title',
         },
         {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
+            title: '简介',
+            dataIndex: 'blogDesc',
         },
         {
-            title: 'Tags',
-            key: 'tags',
-            dataIndex: 'tags',
-            scopedSlots: { customRender: 'tags' },
+            title: '菜单',
+            dataIndex: 'menuId',
+            scopedSlots: {customRender: 'menuId'},
         },
         {
-            title: 'Action',
-            key: 'action',
-            scopedSlots: { customRender: 'action' },
+            title: '修改时间',
+            dataIndex: 'updateTime',
         },
     ];
 
-    const data = [
-        {
-            key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park',
-            tags: ['nice', 'developer'],
-        },
-        {
-            key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 1 Lake Park',
-            tags: ['loser'],
-        },
-        {
-            key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park',
-            tags: ['cool', 'teacher'],
-        },
-    ];
-    import {getBlogList} from '../../common/request';
+    import {managementGetBlogList} from '../../common/request';
     export default {
         name: "BlogManagement",
         data() {
             return {
-                data,
                 columns,
+                blog: []
             };
         },
+        methods:{
+            getBlogList: function () {
+                managementGetBlogList().then(res => {
+                    this.blog = res.data.list.map(blog => {
+                        blog.key = blog.id;
+                        return blog;
+                    });
+                })
+            }
+
+        },
+        created: function () {
+            this.getBlogList();
+        }
     }
 </script>
 
