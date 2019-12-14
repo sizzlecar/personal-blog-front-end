@@ -7,7 +7,7 @@ import { Button, Card, Dropdown, Form, Icon,
     Layout, List, Select, Row,
     Tree, TreeSelect, Col, Input,
     Menu, Modal, Checkbox, Comment,
-    BackTop, Table, message} from 'ant-design-vue';
+    BackTop, Table, Divider,message} from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.less'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
@@ -43,6 +43,7 @@ Vue.use(Row);
 Vue.use(Tree);
 Vue.use(TreeSelect);
 Vue.use(TreeSelect);
+Vue.use(Divider);
 Vue.use(VueRouter);
 Vue.use(mavonEditor);
 const router = new VueRouter({
