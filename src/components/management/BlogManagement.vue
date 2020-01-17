@@ -22,6 +22,13 @@
                 :dataSource="blog"
                 :pagination="pagination">
             <span slot="customTitle"><a-icon type="smile-o"/> Id</span>
+            <span slot="action" slot-scope="record">
+              <a @click="jumpDetail(record.blogMenu.id, record.id)">详情{{record.id}}</a>
+              <a-divider type="vertical" />
+              <a href="javascript:;">删除</a>
+              <a-divider type="vertical" />
+              <a href="javascript:;" class="ant-dropdown-link"> More actions <a-icon type="down" /> </a>
+            </span>
         </a-table>
     </a-card>
 
@@ -51,6 +58,11 @@
         {
             title: '修改时间',
             dataIndex: 'updateTime',
+        },
+        {
+            title: '操作',
+            key: 'action',
+            scopedSlots: { customRender: 'action' },
         },
     ];
 
@@ -96,6 +108,7 @@
                         blog.key = blog.id;
                         return blog;
                     });
+                    window.console.log(this.blog);
                 })
             },
             transField(allMenu) {
@@ -123,7 +136,10 @@
                     this.treeData = this.transField(res.data);
                 });
             },
-
+            jumpDetail: function(menuId, blogId){
+                window.console.log(menuId);
+                this.$router.push({path: '/management/blog/add-blog/' + `${menuId}`+ "/" + `${blogId}`+ "/0"});
+            },
             search: function () {
                 this.getBlogList();
             }

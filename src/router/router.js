@@ -43,7 +43,7 @@ const routers = [
         component: Management,
         children: [
             {
-                path: '/management/blog/add-blog',
+                path: '/management/blog/add-blog/:menuId/:blogId/:addFlag',
                 name: 'BlogEdit',
                 component: BlogEdit,
                 props: true
@@ -57,7 +57,7 @@ const routers = [
                 component: BlogManagement,
             }
         ],
-        redirect: '/management/blog/add-blog',//如果直接访问 /blog 会重定向到 /blog/personal-profile
+        redirect: '/management/blog/add-blog/1/1/1',//如果直接访问 /blog 会重定向到 /blog/personal-profile
         beforeEnter: (to, from, next) => {
             // '/management' 全局路由前置守卫，如果没有登陆则重定向至首页
             if(!isLogin()){

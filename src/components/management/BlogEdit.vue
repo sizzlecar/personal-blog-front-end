@@ -59,10 +59,24 @@
 </template>
 
 <script>
-    import {addBlog, getMenu} from '../../common/request';
+    import {addBlog, getMenu, getBlogDetail} from '../../common/request';
 
     export default {
         name: "BlogEdit",
+        props: {
+            menuId: {
+                type: String,
+                default: null
+            },
+            blogId: {
+                type: String,
+                default: null
+            },
+            addFlag: {
+                type: String,
+                default: '1'
+            }
+        },
         data() {
             return {
                 toolbars: {
@@ -115,15 +129,18 @@
                     if (!err) {
                         values.content = this.content;
                         window.console.log('Received values of form: ', values);
-                        addBlog(values).then(res => {
-                            if (res.status === 200 && res.data.code === "0") {
-                                this.$message.success('提交成功！');
-                                this.form.resetFields();
-                                this.content = "";
-                            }else {
-                                this.$message.error(res.data.msg | '发生错误，请稍后重试');
-                            }
-                        })
+                        if(this.addFlag){
+                            addBlog(values).then(res => {
+                                if (res.status === 200 && res.data.code === "0") {
+                                    this.$message.success('提交成功！');
+                                    this.form.resetFields();
+                                    this.content = "";
+                                }else {
+                                    this.$message.error(res.data.msg | '发生错误，请稍后重试');
+                                }
+                            })
+                        }
+
                     }
                 });
             },
@@ -147,13 +164,64 @@
                     result.push(res);
                 }
                 return result;
-            }
+            },
+            /**
+             * 获取博客详情
+             * @param menuId
+             * @param blogId
+             */
+            getBlogDetail: function (menuId, blogId) {
+                getBlogDetail(menuId, blogId).then(res => {
+                    //获取菜单数据
+                    this.content = res.data.blogContent;
+                    const blog = {
+                        title : res.data.blogTitle,
+                        desc : res.data.blogTitle,
+                        menuId: menuId
+                    };
+                    this.form.setFieldsValue(blog);
+                });
+
+            },
         },
-        created: function () {
+        mounted: function () {
+            window.console.log('mounted is running....');
+            window.console.log(this.menuId);
+            window.console.log(this.blogId);
+            window.console.log(this.addFlag);
             getMenu().then(res => {
                 //获取菜单数据
                 this.treeData = this.transField(res.data);
             });
+            if(this.addFlag === '0'){
+                //修改模式查询博客详情
+                if(this.menuId && this.blogId){
+                    this.getBlogDetail(this.menuId, this.blogId);
+                }
+            }
+
+        },
+
+        beforeRouteUpdate (to, from, next) {
+            // 在当前路由改变，但是该组件被复用时调用
+            // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
+            // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
+            // 可以访问组件实例 `this`
+            window.console.log('beforeRouteUpdate is running....');
+            window.console.log(this.menuId);
+            window.console.log(this.blogId);
+            window.console.log(this.addFlag);
+            getMenu().then(res => {
+                //获取菜单数据
+                this.treeData = this.transField(res.data);
+            });
+            if(this.addFlag === '0'){
+                //修改模式查询博客详情
+                if(this.menuId && this.blogId){
+                    this.getBlogDetail(this.menuId, this.blogId);
+                }
+            }
+            next();
         },
 
     }
