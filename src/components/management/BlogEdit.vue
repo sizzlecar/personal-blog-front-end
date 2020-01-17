@@ -33,6 +33,16 @@
                     >
                     </a-tree-select>
                 </a-form-item>
+                <a-form-item label="是否可见">
+                    <a-radio-group v-decorator="['active', {rules: [{required: true, message: '请选择是否可见',}]}]">
+                        <a-radio value="1">
+                            可见
+                        </a-radio>
+                        <a-radio value="0">
+                            不可见
+                        </a-radio>
+                    </a-radio-group>
+                </a-form-item>
 
                 <a-form-item
                         label="正文">
