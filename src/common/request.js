@@ -19,7 +19,7 @@ function setToken() {
 
 function clearToken() {
     window.localStorage.removeItem("token");
-    axios.defaults.headers.common['Authorization'] = '';
+    delete axios.defaults.headers.common['Authorization'];
 }
 
 function isLogin() {
@@ -87,10 +87,23 @@ function managementGetBlogList(blog) {
     return axios.post('/blog/management/blog/list', blog);
 }
 
+function managementGetBlog(menuId, blogId) {
+    return axios.get('/blog/management/blog/detail/' + menuId + "/" + blogId);
+}
+
+function managementUpdateBlog(blog) {
+    return axios.post('/blog/management/blog/update', blog);
+}
+
+function managementDeleteBlog(blog) {
+    return axios.post('/blog/management/blog/delete', blog);
+}
+
 
 
 
 
 
 export{getMenu, getBlogList, getBlogDetail, login, setToken, clearToken, isLogin, addBlog,
-    managementMenuGetAllMenu, updateMenu, addMenu, deleteMenu, setCsrfToken, managementGetBlogList}
+    managementMenuGetAllMenu, updateMenu, addMenu, deleteMenu, setCsrfToken, managementGetBlogList,
+    managementGetBlog, managementUpdateBlog, managementDeleteBlog}

@@ -23,11 +23,9 @@
                 :pagination="pagination">
             <span slot="customTitle"><a-icon type="smile-o"/> Id</span>
             <span slot="action" slot-scope="record">
-              <a @click="jumpDetail(record.blogMenu.id, record.id)">详情{{record.id}}</a>
+              <a @click="jumpDetail(record.blogMenu.id, record.id)">详情</a>
               <a-divider type="vertical" />
-              <a href="javascript:;">删除</a>
-              <a-divider type="vertical" />
-              <a href="javascript:;" class="ant-dropdown-link"> More actions <a-icon type="down" /> </a>
+              <a @click="deleteBlog(record)">删除</a>
             </span>
         </a-table>
     </a-card>
@@ -66,7 +64,7 @@
         },
     ];
 
-    import {managementGetBlogList, getMenu} from '../../common/request';
+    import {managementGetBlogList, getMenu, managementDeleteBlog} from '../../common/request';
     export default {
         name: "BlogManagement",
         data() {
@@ -137,11 +135,21 @@
                 });
             },
             jumpDetail: function(menuId, blogId){
-                window.console.log(menuId);
                 this.$router.push({path: '/management/blog/add-blog/' + `${menuId}`+ "/" + `${blogId}`+ "/0"});
             },
             search: function () {
                 this.getBlogList();
+            },
+
+            deleteBlog: function (blog) {
+                managementDeleteBlog(blog).then(res => {
+                    if (res.status === 200 && res.data.code === "0") {
+                        this.$message.success('删除成功！');
+                        this.getBlogList();
+                    }else {
+                        this.$message.error(res.data.msg | '发生错误，请稍后重试');
+                    }
+                })
             }
 
         },

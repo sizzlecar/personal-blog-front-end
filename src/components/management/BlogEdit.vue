@@ -69,7 +69,7 @@
 </template>
 
 <script>
-    import {addBlog, getMenu, getBlogDetail} from '../../common/request';
+    import {addBlog, getMenu, managementGetBlog, managementUpdateBlog} from '../../common/request';
 
     export default {
         name: "BlogEdit",
@@ -139,12 +139,22 @@
                     if (!err) {
                         values.content = this.content;
                         window.console.log('Received values of form: ', values);
-                        if(this.addFlag){
+                        if(this.addFlag === '1'){
                             addBlog(values).then(res => {
                                 if (res.status === 200 && res.data.code === "0") {
                                     this.$message.success('提交成功！');
                                     this.form.resetFields();
                                     this.content = "";
+                                }else {
+                                    this.$message.error(res.data.msg | '发生错误，请稍后重试');
+                                }
+                            })
+                        }else {
+                            //修改
+                            values.id = this.blogId;
+                            managementUpdateBlog(values).then(res => {
+                                if (res.status === 200 && res.data.code === "0") {
+                                    this.$message.success('修改成功！');
                                 }else {
                                     this.$message.error(res.data.msg | '发生错误，请稍后重试');
                                 }
@@ -181,13 +191,15 @@
              * @param blogId
              */
             getBlogDetail: function (menuId, blogId) {
-                getBlogDetail(menuId, blogId).then(res => {
+                managementGetBlog(menuId, blogId).then(res => {
                     //获取菜单数据
+                    window.console.log(res);
                     this.content = res.data.blogContent;
                     const blog = {
                         title : res.data.blogTitle,
                         desc : res.data.blogTitle,
-                        menuId: menuId
+                        menuId: menuId,
+                        active: res.data.active.toString()
                     };
                     this.form.setFieldsValue(blog);
                 });
