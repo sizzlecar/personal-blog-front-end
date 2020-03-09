@@ -41,7 +41,7 @@
 
             click: function (e) {
                 if(e.key === "add-blog"){
-                    this.$router.push({path: '/management/blog/add-blog'});
+                    this.$router.push({path: '/management/blog/add-blog/1/1/1'});
                 }else if(e.key === "menu-management"){
                     this.$router.push({path: '/management/blog/menu'});
                 }else if(e.key === "blog-management"){

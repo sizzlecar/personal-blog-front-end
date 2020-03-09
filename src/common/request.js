@@ -1,14 +1,9 @@
 import axios from 'axios';
-import {getCookie} from './utils'
 
 axios.defaults.baseURL = '/';
+axios.defaults.xsrfCookieName = 'csrfToken';
+axios.defaults.xsrfHeaderName = 'x-csrf-token';
 
-function setCsrfToken() {
-    const csrfToken = getCookie('csrfToken');
-    if(csrfToken) {
-        axios.defaults.headers.common['x-csrf-token'] = csrfToken;
-    }
-}
 
 function setToken() {
     const token = window.localStorage.getItem("token");
@@ -105,5 +100,5 @@ function managementDeleteBlog(blog) {
 
 
 export{getMenu, getBlogList, getBlogDetail, login, setToken, clearToken, isLogin, addBlog,
-    managementMenuGetAllMenu, updateMenu, addMenu, deleteMenu, setCsrfToken, managementGetBlogList,
+    managementMenuGetAllMenu, updateMenu, addMenu, deleteMenu, managementGetBlogList,
     managementGetBlog, managementUpdateBlog, managementDeleteBlog}

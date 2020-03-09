@@ -23,7 +23,6 @@
     //import 组件时就算是同级目录也要加上./ 否则会找不到这个组件
     import BaseTop from './base/BaseTop.vue';
     import BaseLeft from "./base/BaseLeft";
-    import {setCsrfToken} from '../../common/request';
 
     export default {
         name: 'Blog',
@@ -32,16 +31,7 @@
 
             };
         },
-        methods: {
-            setCsrfToken: function () {
-                setCsrfToken();
-            }
 
-
-        },
-        created: function () {
-            this.setCsrfToken();
-        },
         components: {
             BaseTop,
             BaseLeft

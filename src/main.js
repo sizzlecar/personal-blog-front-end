@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
 import routers from './router/router'
+import { clearToken} from './common/request'
 // 按需引入ant-vue 组件
 import { Button, Card, Dropdown, Form, Icon,
     Layout, List, Select, Row,
@@ -13,7 +14,8 @@ import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 // Vue-cli生成的工程文件的src/main.js
 import hljs from 'highlight.js'
-import 'highlight.js/styles/googlecode.css' //样式文件
+import 'highlight.js/styles/googlecode.css'
+import axios from "axios"; //样式文件
 Vue.directive('highlight',function (el) {
     let blocks = el.querySelectorAll('pre code');
     blocks.forEach((block)=>{
@@ -51,6 +53,24 @@ const router = new VueRouter({
     mode: 'history',
     routes: routers
 });
+
+
+//请求返回拦截，把数据返回到页面之前做些什么...
+axios.interceptors.response.use((response) => {
+    // token 验证失败
+    const code = response.data.code;
+    if(code && code === 'E0004') {
+        clearToken();
+        Vue.prototype.$message.error('请登陆');
+        router.push({path: '/blog/personal-profile'});
+    }else {
+        //将我们请求到的信息返回页面中请求的逻辑
+        return response;
+    }
+}, function (error) {
+    return Promise.reject(error);
+});
+
 new Vue({
     router,
   render: h => h(App),
