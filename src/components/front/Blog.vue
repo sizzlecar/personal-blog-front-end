@@ -13,7 +13,7 @@
                 </a-layout-content>
             </a-layout>
             <a-layout-footer style="text-align: center;">
-                关致之的个人网站 ©2019 Created by carl
+                关致之的个人网站 ©2019 Created by carl 备案号：晋ICP备19013319号
             </a-layout-footer>
         </a-layout>
     </div>
